@@ -9,6 +9,12 @@ const locationSchema = new Schema({
         default: [],
         ref: 'Products', 
     },
+
+    makeupArtists: {
+        type: [{
+            type: Schema.Types.ObjectId, ref: 'MakeupArtist'
+        }]
+    }
   });
   
   const Location = mongoose.model('Location', locationSchema);

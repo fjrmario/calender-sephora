@@ -4,7 +4,9 @@ const path = require("path");
 const logger = require("morgan");
 require('dotenv').config();
 require('./config/database');
-const userRouter = require('./routes/userRouter')
+const userRouter = require('./routes/userRouter');
+const calendarRouter = require('./routes/calendarRouter');
+const appointmentRouter = require('./routes/appointmentRouter');
 const jwt = require("jsonwebtoken")
 
 const app = express();
@@ -42,20 +44,14 @@ app.get("/api/secret",  (req, res) => {
 // }
 
 app.use("/api/users", userRouter);
-// app.get("/api", (req, res) => {
-//   res.json({msg:"Hello World!"});
-// });
+app.use("/api/customer", calendarRouter);
+app.use("/api/booking", appointmentRouter);
 
 app.get("/*", function (req, res) {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
 const port = process.env.PORT || 3001;
-
-// app.post('/api/users', (req, res) => {
-//   console.log(req.body);
-//   res.json({ msg: 'ok'})
-// })
 
 app.listen(port, function () {
   console.log(`Express app running on port ${port}`);

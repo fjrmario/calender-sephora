@@ -3,7 +3,7 @@ const Appointment = require("../model/appointmentModel");
 const create = async (req, res) => {
     try {
       const createAppointment = await Appointment.create(req.body);
-      res.status(200).send(createAppointment);
+      res.status(200).json(createAppointment);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -12,7 +12,7 @@ const create = async (req, res) => {
   const deleteAppointment = async (req, res) => {
     try {
       const deleteAppt = await Appointment.findByIdAndRemove(req.params.id);
-      res.status(200).send(deleteAppt);
+      res.status(200).json(deleteAppt);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -21,5 +21,4 @@ const create = async (req, res) => {
   module.exports = {
     create,
     deleteAppointment,
-
   };
