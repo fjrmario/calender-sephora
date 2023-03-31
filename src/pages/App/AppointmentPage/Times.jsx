@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { time } from "../../../time";
+import "../App.css";
+import { time } from "../../../../time";
 
 const now = new Date();
 const currentTime = now.toLocaleTimeString([], {

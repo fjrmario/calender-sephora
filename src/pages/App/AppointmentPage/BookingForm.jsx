@@ -1,5 +1,5 @@
 import React from "react";
-import { makeupArtist } from "../../../time"
+import { makeupArtist } from "../../../../time";
 
 const BookingForm = ({ form, selectArtist, selectLocation, handleChange, handleSubmit }) => {
   return (

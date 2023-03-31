@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
-    "build": "^0.1.4",
     "concurrently": "^7.6.0",
     "date-object": "^2.1.2",
     "dotenv": "^16.0.3",

@@ -1,0 +1,53 @@
+[{
+  "_id": {
+    "$oid": "64243bf1eca718736d205275"
+  },
+  "name": "Mira",
+  "workingSchedule": [
+    {
+      "startDate": "2023-03-29",
+      "endDate": "2023-04-15"
+    }
+  ],
+  "workingHours": [
+    {
+      "startTime": "11:00",
+      "endTime": "18:00"
+    }
+  ],
+  "breakTime": [
+    {
+      "startTime": "13:00",
+      "endTime": "14:00"
+    }
+  ],
+  "location": {
+    "$oid": "64243a52eca718736d20526f"
+  }
+},{
+  "_id": {
+    "$oid": "6424434beca718736d205293"
+  },
+  "name": "Jodi",
+  "workingSchedule": [
+    {
+      "startDate": "2023-03-29",
+      "endDate": "2023-04-27"
+    }
+  ],
+  "workingHours": [
+    {
+      "startTime": "10:00",
+      "endTime": "17:00"
+    }
+  ],
+  "breakTime": [
+    {
+      "startTime": "13:00",
+      "endTime": "14:00"
+    }
+  ],
+  "location": {
+    "$oid": "64243a52eca718736d20526f"
+  }
+}]

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { makeupArtist } from "../../../time";
+import { makeupArtist } from "../../../../time";
 import BookingForm from "./BookingForm";
 
 const Booking = ({ setSelectedArtist, setLocation, setCustomerInfo, customerInfo }) => {

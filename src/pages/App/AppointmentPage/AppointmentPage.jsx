@@ -1,5 +1,6 @@
 import "react-calendar/dist/Calendar.css";
 import { useState } from "react";
+import "../App.css";
 import Times from "./Times";
 import Booking from "./Booking";
 import Cal from "./Calendar";
@@ -48,6 +49,5 @@ const AppointmentPage = () => {
     </div>
   );
 };
-
 
 export default AppointmentPage;

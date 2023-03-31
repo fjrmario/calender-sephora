@@ -1,54 +1,62 @@
 const express = require("express");
 const path = require("path");
+// const favicon = require("serve-favicon");
 const logger = require("morgan");
-require("dotenv").config();
-require("./config/database");
-// const jwt = require("jsonwebtoken");
-
-
-// const userRouter = require("./routes/usersRouter");
+require('dotenv').config();
+require('./config/database');
+const userRouter = require('./routes/userRouter')
+const jwt = require("jsonwebtoken")
 
 const app = express();
-const port = process.env.PORT || 3000;
 
 app.use(logger("dev"));
-// app.use(express.urlencoded());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "dist")));
 
 app.get("/api", (req, res) => {
-  res.json({ msg: "Hi" });
+  res.send("Hello World!");
 });
 
-// log in for future admin roles!
+app.get("/api/secret",  (req, res) => {
+// app.get("/api/secret", isLoggedIn, (req, res) => {
+  const authorization = req.headers.authorization;
+  const token = authorization.split(" ")[1];
+  const decode = jwt.verify(token, process.env.JWT_SECRET);
+  if (decode) {
+    res.json({ message : "secret"})
+  } else {
+    res.status(403).json({ message: "sorry"})
+  }
+});
 
 // const isLoggedIn = (req, res, next) => {
 //   const authorization = req.headers.authorization;
 //   const token = authorization.split(" ")[1];
 //   const decode = jwt.verify(token, process.env.JWT_SECRET);
 //   if (decode) {
-//     res.locals.user = decode.user;
-//     next();
+//     req.user = decode.user;
+//     next()
 //   } else {
 //     res.status(403).json({ message: "sorry" });
-//   }
-// };
+//   } 
+// }
 
-// app.get("/api/secret", isLoggedIn, (req, res) => {
-//   console.log(res.locals.user);
-//   res.json({ message: "secret" });
-// });
-
-// app.use("/api/users", userRouter);
-
-// app.post("/api/users", (req, res) => {
-//   res.json({ body: req.body });
+app.use("/api/users", userRouter);
+// app.get("/api", (req, res) => {
+//   res.json({msg:"Hello World!"});
 // });
 
 app.get("/*", function (req, res) {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+const port = process.env.PORT || 3001;
+
+// app.post('/api/users', (req, res) => {
+//   console.log(req.body);
+//   res.json({ msg: 'ok'})
+// })
+
+app.listen(port, function () {
+  console.log(`Express app running on port ${port}`);
 });
