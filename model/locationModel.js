@@ -4,10 +4,12 @@ const Schema = mongoose.Schema;
 const locationSchema = new Schema({
     name: { type: String, required: true },
    
-    Products: [{
-        type: Schema.Types.ObjectId, 
+    Products: {
+        type: Array, 
+        default: [],
         ref: 'Products', 
-    }],
+    },
   });
   
-  module.exports = mongoose.model('Location', locationSchema);
+  const Location = mongoose.model('Location', locationSchema);
+  module.exports = Location
