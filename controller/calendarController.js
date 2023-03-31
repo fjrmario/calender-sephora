@@ -1,4 +1,4 @@
-const Holiday = require("../models/Holiday");
+const MakeUpArtist = require("../model/makeupArtistiModel");
 
 const create = async (req, res) => {
   try {
