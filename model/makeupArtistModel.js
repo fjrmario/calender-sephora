@@ -20,4 +20,5 @@ const makeupArtistSchema = new Schema({
     },
   });
   
-  module.exports = mongoose.model('MakeupArtist', makeupArtistSchema);
+  const MakeupArtist = mongoose.model('MakeupArtist', makeupArtistSchema);
+  module.exports = MakeupArtist
