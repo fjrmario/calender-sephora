@@ -9,10 +9,10 @@ const create = async (req, res) => {
     }
   };
 
-  const deleteHoliday = async (req, res) => {
+  const deleteAppointment = async (req, res) => {
     try {
-      const deleteAppointment = await Appointment.findByIdAndRemove(req.params.id);
-      res.status(200).send(deleteAppointment);
+      const deleteAppt = await Appointment.findByIdAndRemove(req.params.id);
+      res.status(200).send(deleteAppt);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -20,6 +20,6 @@ const create = async (req, res) => {
 
   module.exports = {
     create,
-    delete: deleteHoliday,
+    deleteAppointment,
 
   };
