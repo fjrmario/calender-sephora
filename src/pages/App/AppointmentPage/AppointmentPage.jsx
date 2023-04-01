@@ -32,11 +32,10 @@ const AppointmentPage = () => {
       <h1 className="header">Calendar</h1>
       <Booking
         setSelectedArtist={setSelectedArtist}
-        showTime={showTime}
-        date={date}
         setLocation={setLocation}
         setCustomerInfo={setCustomerInfo}
         customerInfo={customerInfo}
+        fetchedLocations={fetchedLocations}
       />
       {showTime ? (
         <Times
