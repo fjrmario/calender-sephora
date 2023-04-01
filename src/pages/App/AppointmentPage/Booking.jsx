@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 // import { makeupArtist } from "../../../../time";
 import BookingForm from "./BookingForm";
 
-const Booking = ({ setSelectedArtist, setLocation, setCustomerInfo, customerInfo }) => {
+const Booking = ({ setSelectedArtist, setLocation, setCustomerInfo, customerInfo, fetchedLocations, }) => {
   const [form, setForm] = useState({});
   const [selectArtist, setSelectArtist] = useState([]);
   const [selectLocation, setSelectLocation] = useState("");
@@ -44,13 +44,16 @@ const Booking = ({ setSelectedArtist, setLocation, setCustomerInfo, customerInfo
 
   return (
     <div>
-      <BookingForm
-        form={form}
-        selectArtist={selectArtist}
-        selectLocation={selectLocation}
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
-      />
+<BookingForm
+  form={form}
+  selectArtist={selectArtist}
+  selectLocation={selectLocation}
+  handleChange={handleChange}
+  handleSubmit={handleSubmit}
+  fetchedLocations={fetchedLocations}
+/>
+
+      
     </div>
   );
 };

@@ -12,6 +12,7 @@ const AppointmentPage = () => {
   const [selectArtist, setSelectedArtist] = useState("");
   const [location, setLocation] = useState();
   const [customerInfo, setCustomerInfo] = useState({ name: "", email: "" });
+  const [fetchedLocations, setFetchedLocations] = useState();
 
   console.log(`selectArtist in ApptPage: ${JSON.stringify(selectArtist)}`);
   console.log(`location in ApptPage: ${JSON.stringify(location)}`);
@@ -21,7 +22,7 @@ const AppointmentPage = () => {
     const fetchLocation = async () => {
       const response = await fetch("/api/customer");
       const locationData = await response.json();
-      setLocation(locationData); // Set the fetched location data to the state
+      setFetchedLocations(locationData); // Set the fetched location data to the state
     };
     fetchLocation();
   }, []);
@@ -30,13 +31,11 @@ const AppointmentPage = () => {
     <div className="app">
       <h1 className="header">Calendar</h1>
       <Booking
-        setSelectedArtist={setSelectedArtist}
-        showTime={showTime}
-        date={date}
-        setLocation={setLocation}
-        setCustomerInfo={setCustomerInfo}
-        customerInfo={customerInfo}
-      />
+  setSelectedArtist={setSelectedArtist}
+  fetchedLocations={fetchedLocations}
+  setCustomerInfo={setCustomerInfo}
+  customerInfo={customerInfo}
+/>
       {showTime ? (
         <Times
           date={date}
