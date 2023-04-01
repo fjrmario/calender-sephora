@@ -1,6 +1,6 @@
 import React from "react";
 
-const BookingForm = ({ form, selectArtist, selectLocation, handleChange, handleSubmit }) => {
+const BookingForm = ({ form, selectArtist, selectLocation, handleChange, handleSubmit, fetchedLocations }) => {
   return (
     <form onSubmit={handleSubmit}>
       <label>Name:</label>
@@ -12,16 +12,16 @@ const BookingForm = ({ form, selectArtist, selectLocation, handleChange, handleS
       <label htmlFor="location">Choose a location:</label>
 
       <select name="location" onChange={handleChange}>
-        <option value="">--Please choose location</option>
-        {selectArtist.map((artist, index) => {
-          return (
-            <option key={index} value={artist.location}>
-              {" "}
-              {artist.location}
-            </option>
-          );
-        })}
-      </select>
+  <option value="">--Please choose location</option>
+  {fetchedLocations &&
+    fetchedLocations.map((location, index) => {
+      return (
+        <option key={index} value={location.name}>
+          {location.name}
+        </option>
+      );
+    })}
+</select>
 
       {selectLocation && (
         <select name="artist" onChange={handleChange}>

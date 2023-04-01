@@ -12,19 +12,20 @@ const AppointmentPage = () => {
   const [selectArtist, setSelectedArtist] = useState("");
   const [location, setLocation] = useState();
   const [customerInfo, setCustomerInfo] = useState({ name: "", email: "" });
+  const [fetchedLocations, setFetchedLocations] = useState();
 
   console.log(`selectArtist in ApptPage: ${JSON.stringify(selectArtist)}`);
   console.log(`location in ApptPage: ${JSON.stringify(location)}`);
 
-  useEffect(() => {
-    // Fetch locations
-    const fetchLocation = async () => {
-      const response = await fetch("/api/customer");
-      const locationData = await response.json();
-      setLocation(locationData); // Set the fetched location data to the state
-    };
-    fetchLocation();
-  }, []);
+useEffect(() => {
+  // Fetch locations
+  const fetchLocation = async () => {
+    const response = await fetch("/api/customer");
+    const locationData = await response.json();
+    setFetchedLocations(locationData); // Set the fetched location data to the state
+  };
+  fetchLocation();
+}, []);
 
   return (
     <div className="app">
@@ -36,6 +37,7 @@ const AppointmentPage = () => {
         setLocation={setLocation}
         setCustomerInfo={setCustomerInfo}
         customerInfo={customerInfo}
+        fetchedLocations={fetchedLocations}
       />
       {showTime ? (
         <Times
