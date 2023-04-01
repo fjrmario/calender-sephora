@@ -1,8 +1,5 @@
-import React from "react";
-
-const BookingForm = ({ form, selectArtist, selectLocation, handleChange, handleSubmit }) => {
-
-  const [location, setLocation] = useState([]);
+const BookingForm = ({ form, selectArtist, selectLocation, handleChange, handleSubmit, fetchedLocations }) => {
+  
   return (
     <form onSubmit={handleSubmit}>
       <label>Name:</label>
@@ -15,15 +12,15 @@ const BookingForm = ({ form, selectArtist, selectLocation, handleChange, handleS
 
       <select name="location" onChange={handleChange}>
         <option value="">--Please choose location</option>
-        {selectArtist.map((artist, index) => {
-          return (
-            <option key={index} value={artist.location}>
-              {" "}
-              {artist.location}
-            </option>
-          );
-        })}
-      </select>
+        {fetchedLocations &&
+        fetchedLocations.map((location, index) => {
+        return (
+          <option key={index} value={location.name}>
+            {location.name}
+          </option>
+        );
+      })}
+</select>
 
       {selectLocation && (
         <select name="artist" onChange={handleChange}>
