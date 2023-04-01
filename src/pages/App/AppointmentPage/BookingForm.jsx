@@ -15,7 +15,7 @@ const BookingForm = ({ form, selectArtist, selectLocation, handleChange, handleS
         {fetchedLocations &&
         fetchedLocations.map((location, index) => {
         return (
-          <option key={index} value={location.name}>
+          <option key={index} value={location._id}>
             {location.name}
           </option>
         );
@@ -29,7 +29,7 @@ const BookingForm = ({ form, selectArtist, selectLocation, handleChange, handleS
             <option key={index} value={artist.name}>
               {" "}
               {artist.name}
-              {/* {console.log(artist)} */}
+              {console.log("booking form", selectArtist)}
             </option>
           ))}
         </select>
