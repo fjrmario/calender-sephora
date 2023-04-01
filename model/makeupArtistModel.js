@@ -15,8 +15,11 @@ const makeupArtistSchema = new Schema({
       startTime: { type: String, required: true },
       endTime: { type: String, required: true },
     },
+    // location: {
+    //   id: { type: Schema.Types.ObjectId, ref: 'Location', required: true },
+    // },
     location: {
-      id: { type: Schema.Types.ObjectId, ref: 'Location', required: true },
+      id: { type: String, ref: 'Location', required: true },
     },
   });
   
