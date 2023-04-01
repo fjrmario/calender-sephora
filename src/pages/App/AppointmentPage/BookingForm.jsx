@@ -1,7 +1,9 @@
-import React from "react";
 import { makeupArtist } from "../../../../time";
+import axios from 'axios;'
 
 const BookingForm = ({ form, selectArtist, selectLocation, handleChange, handleSubmit }) => {
+
+  const [location, setLocation] = useState([]);
   return (
     <form onSubmit={handleSubmit}>
       <label>Name:</label>

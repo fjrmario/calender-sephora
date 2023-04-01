@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { makeupArtist } from "../../../../time";
 import BookingForm from "./BookingForm";
 
