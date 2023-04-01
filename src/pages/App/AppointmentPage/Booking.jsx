@@ -44,7 +44,6 @@ const Booking = ({ setSelectedArtist, setLocation, setCustomerInfo, customerInfo
 
   return (
     <div>
-<<<<<<< HEAD
 <BookingForm
   form={form}
   selectArtist={selectArtist}
@@ -55,16 +54,6 @@ const Booking = ({ setSelectedArtist, setLocation, setCustomerInfo, customerInfo
 />
 
       
-=======
-      <BookingForm
-        form={form}
-        selectArtist={selectArtist}
-        selectLocation={selectLocation}
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
-        fetchedLocations={fetchedLocations}
-      />
->>>>>>> harold
     </div>
   );
 };
