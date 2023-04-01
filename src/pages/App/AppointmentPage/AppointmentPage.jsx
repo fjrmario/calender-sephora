@@ -22,7 +22,7 @@ const AppointmentPage = () => {
     const fetchLocation = async () => {
       const response = await fetch("/api/customer");
       const locationData = await response.json();
-      setFetchedLocations(locationData); // Set the fetched location data to the state
+      setLocation(locationData); // Set the fetched location data to the state
     };
     fetchLocation();
   }, []);
@@ -31,11 +31,13 @@ const AppointmentPage = () => {
     <div className="app">
       <h1 className="header">Calendar</h1>
       <Booking
-  setSelectedArtist={setSelectedArtist}
-  fetchedLocations={fetchedLocations}
-  setCustomerInfo={setCustomerInfo}
-  customerInfo={customerInfo}
-/>
+        setSelectedArtist={setSelectedArtist}
+        showTime={showTime}
+        date={date}
+        setLocation={setLocation}
+        setCustomerInfo={setCustomerInfo}
+        customerInfo={customerInfo}
+      />
       {showTime ? (
         <Times
           date={date}
