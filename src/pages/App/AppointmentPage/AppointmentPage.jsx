@@ -10,15 +10,14 @@ const AppointmentPage = () => {
   const [date, setDate] = useState(new Date());
   const [showTime, setShowTime] = useState(false);
   const [selectArtist, setSelectedArtist] = useState("");
-  const [location, setLocation] = useState();
   const [customerInfo, setCustomerInfo] = useState({ name: "", email: "" });
   const [fetchedLocations, setFetchedLocations] = useState();
 
   console.log(`selectArtist in ApptPage: ${JSON.stringify(selectArtist)}`);
-  console.log(`location in ApptPage: ${JSON.stringify(location)}`);
+  console.log(`location in ApptPage: ${JSON.stringify(fetchedLocations)}`);
 
   useEffect(() => {
-    // Fetch locations
+    // Fetch all locations
     const fetchLocation = async () => {
       const response = await fetch("/api/customer");
       const locationData = await response.json();
@@ -32,7 +31,6 @@ const AppointmentPage = () => {
       <h1 className="header">Calendar</h1>
       <Booking
         setSelectedArtist={setSelectedArtist}
-        setLocation={setLocation}
         setCustomerInfo={setCustomerInfo}
         customerInfo={customerInfo}
         fetchedLocations={fetchedLocations}
@@ -43,7 +41,6 @@ const AppointmentPage = () => {
           date={date}
           selectArtist={selectArtist}
           showTime={showTime}
-          location={location}
           customerInfo={customerInfo}
         />
       ) : null}

@@ -25,7 +25,7 @@ const checkTimeSlot = (startTime) => {
   return currTimeInMins > startTimeInMins;
 };
 
-function Times({ date, selectLocation, selectArtist, showTime, location, customerInfo }) {
+function Times({ date, selectLocation, selectArtist, showTime, customerInfo, setShowTimeslot  }) {
   const [event, setEvent] = useState(null);
   const [info, setInfo] = useState(false);
   const [dateChanged, setDateChanged] = useState(false);
@@ -49,6 +49,10 @@ function Times({ date, selectLocation, selectArtist, showTime, location, custome
     }
   };
 
+<<<<<<< HEAD
+=======
+  
+>>>>>>> harold
   function displayInfo(e) {
     setInfo(true);
     setEvent(e.target.innerText);
@@ -58,7 +62,7 @@ function Times({ date, selectLocation, selectArtist, showTime, location, custome
         date: date.toLocaleDateString("en-UK"),
         timeSlot: e.target.innerText,
         makeupArtistId: selectArtist._id,
-        locationId: location._id,
+        locationId: selectLocation._id,
         customerInfo: customerInfo,
       })
     );
@@ -79,7 +83,6 @@ function Times({ date, selectLocation, selectArtist, showTime, location, custome
 
   const isTimeSlotWithinWorkingHours = (startTime, endTime, selectArtist) => {
     const artist = selectArtist?.workingHours;
-    console.log(`artist: ${artist}`);
     console.log("selectArtist in Times:", JSON.stringify(selectArtist));
     
     const workingHourStartInMins = timeToMins(selectArtist.workingHours);
@@ -100,7 +103,7 @@ function Times({ date, selectLocation, selectArtist, showTime, location, custome
 
   const isTimeSlotWithinBreakTime =  (startTime, endTime, selectArtist) => {
     const artist = selectArtist?.breakTime;
-    console.log(`artist: ${artist}`);
+    console.log(`artist: ${artist.name}`);
     const breakStartTimeInMins = timeToMins(selectArtist.breakTime.startTime);
     const breakEndTimeInMins = timeToMins(selectArtist.breakTime.endTime);
     const breakTimeSlotStartTimeInMins = timeToMins(startTime);
@@ -147,7 +150,7 @@ function Times({ date, selectLocation, selectArtist, showTime, location, custome
     return checkBooking;
   };
 
-  return (
+   return (
     <div className="times">
       {time.map((times, index) => {
         const startTime = times.split(" - ")[0];

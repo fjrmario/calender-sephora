@@ -11,16 +11,17 @@ const BookingForm = ({ form, selectArtist, selectLocation, handleChange, handleS
       <label htmlFor="location">Choose a location:</label>
 
       <select name="location" onChange={handleChange}>
-        <option value="">--Please choose location</option>
-        {fetchedLocations &&
-        fetchedLocations.map((location, index) => {
-        return (
-          <option key={index} value={location._id}>
-            {location.name}
-          </option>
-        );
-      })}
+  <option value="">--Please choose location</option>
+  {fetchedLocations &&
+    fetchedLocations.map((location, index) => {
+      return (
+        <option key={index} value={location._id}>
+          {location.name}
+        </option>
+      );
+    })}
 </select>
+
 
       {selectLocation && (
         <select name="artist" onChange={handleChange}>
@@ -34,7 +35,7 @@ const BookingForm = ({ form, selectArtist, selectLocation, handleChange, handleS
         </select>
       )}
 
-      <button type="submit">Send Email Notification </button>
+      <button type="submit">Show timeslot </button>
     </form>
   );
 };

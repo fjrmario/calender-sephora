@@ -18,7 +18,7 @@ const getMakeupArtistsByLocation = async (req, res) => {
   console.log(`locationId: ${locationId}`);
 
   try {
-    const allArtist = await MakeupArtist.find({ "location.id": locationId }).select('name');
+    const allArtist = await MakeupArtist.find({ "location.id": locationId })
     console.log(`allArtist: ${allArtist}`);
     res.status(200).json(allArtist);
   } catch (error) {
