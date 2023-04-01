@@ -1,5 +1,5 @@
 import "react-calendar/dist/Calendar.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../App.css";
 import Times from "./Times";
 import Booking from "./Booking";
@@ -9,12 +9,22 @@ import DateSelect from "./DateSelect";
 const AppointmentPage = () => {
   const [date, setDate] = useState(new Date());
   const [showTime, setShowTime] = useState(false);
-  const [selectArtist, setSelectedArtist] = useState([]);
+  const [selectArtist, setSelectedArtist] = useState("");
   const [location, setLocation] = useState();
   const [customerInfo, setCustomerInfo] = useState({ name: "", email: "" });
 
   console.log(`selectArtist in ApptPage: ${JSON.stringify(selectArtist)}`);
   console.log(`location in ApptPage: ${JSON.stringify(location)}`);
+
+  useEffect(() => {
+    // Fetch locations
+    const fetchLocation = async () => {
+      const response = await fetch("/api/customer");
+      const locationData = await response.json();
+      setLocation(locationData); // Set the fetched location data to the state
+    };
+    fetchLocation();
+  }, []);
 
   return (
     <div className="app">

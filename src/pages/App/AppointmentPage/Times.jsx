@@ -31,9 +31,23 @@ function Times({ date, selectLocation, selectArtist, showTime, location, custome
   const [dateChanged, setDateChanged] = useState(false);
   const [apptTiming, setApptTiming] = useState([]);
 
-  const makeAppt = (preAppointments) => {
-    return [...apptTiming, preAppointments];
+  const makeAppt = async (preAppointments) => {
+    try{
+      const response = await fetch(`/api/booking`,{
+        method: "POST",
+        headers: { // Change 'header' to 'headers'
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(preAppointments)
+      });
+      if (!response.ok) {
+        throw new Error("Error creating appointment");
+      }
+    } catch (error) {
+      console.error("Error creating appointment:", error);
+    }
   };
+
 
   console.log("selectLocation in Times:", location);
 
@@ -46,8 +60,8 @@ function Times({ date, selectLocation, selectArtist, showTime, location, custome
       makeAppt({
         date: date.toLocaleDateString("en-UK"),
         timeSlot: e.target.innerText,
-        makeupArtist: selectArtist,
-        location: {location},
+        makeupArtistId: selectArtist._id,
+        locationId: location._id,
         customerInfo: customerInfo,
       })
     );
@@ -71,8 +85,8 @@ function Times({ date, selectLocation, selectArtist, showTime, location, custome
     console.log(`artist: ${artist}`);
     console.log("selectArtist in Times:", JSON.stringify(selectArtist));
     
-    const workingHourStartInMins = timeToMins(selectArtist.workingHours[0].startTime);
-    const workingHourEndInMins = timeToMins(selectArtist.workingHours[0].endTime);
+    const workingHourStartInMins = timeToMins(selectArtist.workingHours.startTime);
+    const workingHourEndInMins = timeToMins(selectArtist.workingHours.endTime);
     const timeSlotStartInMins = timeToMins(startTime);
     const timeSlotEndInMins = timeToMins(endTime);
   
