@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "../App.css";
 import { time } from "../../../../time";
 
@@ -25,34 +25,19 @@ const checkTimeSlot = (startTime) => {
   return currTimeInMins > startTimeInMins;
 };
 
-function Times({ date, selectLocation, selectArtist, showTime, customerInfo, setShowTimeslot  }) {
+function Times({ date, selectLocation, selectArtist, showTime, location, customerInfo }) {
   const [event, setEvent] = useState(null);
   const [info, setInfo] = useState(false);
   const [dateChanged, setDateChanged] = useState(false);
   const [apptTiming, setApptTiming] = useState([]);
 
-  console.log(location, "cool me")
-  const makeAppt = async (preAppointments) => {
-    try{
-      const response = await fetch(`/api/booking`,{
-        method: "POST",
-        headers: { // Change 'header' to 'headers'
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(preAppointments)
-      });
-      if (!response.ok) {
-        throw new Error("Error creating appointment");
-      }
-    } catch (error) {
-      console.error("Error creating appointment:", error);
-    }
+  const makeAppt = (preAppointments) => {
+    return [...apptTiming, preAppointments];
   };
 
-<<<<<<< HEAD
-=======
+  console.log("selectLocation in Times:", location);
+
   
->>>>>>> harold
   function displayInfo(e) {
     setInfo(true);
     setEvent(e.target.innerText);
@@ -61,8 +46,8 @@ function Times({ date, selectLocation, selectArtist, showTime, customerInfo, set
       makeAppt({
         date: date.toLocaleDateString("en-UK"),
         timeSlot: e.target.innerText,
-        makeupArtistId: selectArtist._id,
-        locationId: selectLocation._id,
+        makeupArtist: selectArtist,
+        location: {location},
         customerInfo: customerInfo,
       })
     );
@@ -83,10 +68,11 @@ function Times({ date, selectLocation, selectArtist, showTime, customerInfo, set
 
   const isTimeSlotWithinWorkingHours = (startTime, endTime, selectArtist) => {
     const artist = selectArtist?.workingHours;
+    console.log(`artist: ${artist}`);
     console.log("selectArtist in Times:", JSON.stringify(selectArtist));
     
-    const workingHourStartInMins = timeToMins(selectArtist.workingHours);
-    const workingHourEndInMins = timeToMins(selectArtist.workingHours);
+    const workingHourStartInMins = timeToMins(selectArtist.workingHours.startTime);
+    const workingHourEndInMins = timeToMins(selectArtist.workingHours.endTime);
     const timeSlotStartInMins = timeToMins(startTime);
     const timeSlotEndInMins = timeToMins(endTime);
   
@@ -103,7 +89,7 @@ function Times({ date, selectLocation, selectArtist, showTime, customerInfo, set
 
   const isTimeSlotWithinBreakTime =  (startTime, endTime, selectArtist) => {
     const artist = selectArtist?.breakTime;
-    console.log(`artist: ${artist.name}`);
+    console.log(`artist: ${artist}`);
     const breakStartTimeInMins = timeToMins(selectArtist.breakTime.startTime);
     const breakEndTimeInMins = timeToMins(selectArtist.breakTime.endTime);
     const breakTimeSlotStartTimeInMins = timeToMins(startTime);
@@ -150,7 +136,7 @@ function Times({ date, selectLocation, selectArtist, showTime, customerInfo, set
     return checkBooking;
   };
 
-   return (
+  return (
     <div className="times">
       {time.map((times, index) => {
         const startTime = times.split(" - ")[0];

@@ -22,6 +22,8 @@ const makeupArtistSchema = new Schema({
     location: {
       id: { type: String, ref: 'Location', required: true },
     },
+
+    // timeslot: []
   });
   
   const MakeupArtist = mongoose.model('MakeupArtist', makeupArtistSchema);

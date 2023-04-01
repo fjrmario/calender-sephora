@@ -35,7 +35,6 @@ const BookingForm = ({ form, selectArtist, selectLocation, handleChange, handleS
         </select>
       )}
 
-      <button type="submit">Show timeslot </button>
     </form>
   );
 };
