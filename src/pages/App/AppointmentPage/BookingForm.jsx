@@ -1,5 +1,4 @@
-import { makeupArtist } from "../../../../time";
-import axios from 'axios;'
+import React from "react";
 
 const BookingForm = ({ form, selectArtist, selectLocation, handleChange, handleSubmit }) => {
 
@@ -16,7 +15,7 @@ const BookingForm = ({ form, selectArtist, selectLocation, handleChange, handleS
 
       <select name="location" onChange={handleChange}>
         <option value="">--Please choose location</option>
-        {makeupArtist.map((artist, index) => {
+        {selectArtist.map((artist, index) => {
           return (
             <option key={index} value={artist.location}>
               {" "}
