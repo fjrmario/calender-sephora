@@ -29,7 +29,6 @@ const BookingForm = ({ form, selectArtist, selectLocation, handleChange, handleS
             <option key={index} value={artist.name}>
               {" "}
               {artist.name}
-              {console.log("booking form", selectArtist)}
             </option>
           ))}
         </select>

@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const makeupArtistSchema = new Schema({
     name: { type: String, required: true },
+    
     workingSchedule: {
       startDate: { type: Date, required: true },
       endDate: { type: Date, required: true },

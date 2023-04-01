@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "../App.css";
 import { time } from "../../../../time";
 
@@ -31,6 +31,7 @@ function Times({ date, selectLocation, selectArtist, showTime, location, custome
   const [dateChanged, setDateChanged] = useState(false);
   const [apptTiming, setApptTiming] = useState([]);
 
+  console.log(location, "cool me")
   const makeAppt = async (preAppointments) => {
     try{
       const response = await fetch(`/api/booking`,{
@@ -48,10 +49,6 @@ function Times({ date, selectLocation, selectArtist, showTime, location, custome
     }
   };
 
-
-  console.log("selectLocation in Times:", location);
-
-  
   function displayInfo(e) {
     setInfo(true);
     setEvent(e.target.innerText);
@@ -85,8 +82,8 @@ function Times({ date, selectLocation, selectArtist, showTime, location, custome
     console.log(`artist: ${artist}`);
     console.log("selectArtist in Times:", JSON.stringify(selectArtist));
     
-    const workingHourStartInMins = timeToMins(selectArtist.workingHours.startTime);
-    const workingHourEndInMins = timeToMins(selectArtist.workingHours.endTime);
+    const workingHourStartInMins = timeToMins(selectArtist.workingHours);
+    const workingHourEndInMins = timeToMins(selectArtist.workingHours);
     const timeSlotStartInMins = timeToMins(startTime);
     const timeSlotEndInMins = timeToMins(endTime);
   
@@ -104,8 +101,8 @@ function Times({ date, selectLocation, selectArtist, showTime, location, custome
   const isTimeSlotWithinBreakTime =  (startTime, endTime, selectArtist) => {
     const artist = selectArtist?.breakTime;
     console.log(`artist: ${artist}`);
-    const breakStartTimeInMins = timeToMins(selectArtist.breakTime[0].startTime);
-    const breakEndTimeInMins = timeToMins(selectArtist.breakTime[0].endTime);
+    const breakStartTimeInMins = timeToMins(selectArtist.breakTime.startTime);
+    const breakEndTimeInMins = timeToMins(selectArtist.breakTime.endTime);
     const breakTimeSlotStartTimeInMins = timeToMins(startTime);
     const breakTimeSlotEndTimeInMins = timeToMins(endTime);
   
