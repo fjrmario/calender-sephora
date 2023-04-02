@@ -4,5 +4,6 @@ const router = express.Router();
 
 router.delete("/:id", appointmentController.deleteAppointment);
 router.post("/", appointmentController.create)
+router.get("/:id", appointmentController.findAppointment);
 
 module.exports = router;

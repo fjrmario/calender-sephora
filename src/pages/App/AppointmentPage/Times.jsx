@@ -31,10 +31,6 @@ function Times({ date, selectArtist, customerInfo }) {
   const [dateChanged, setDateChanged] = useState(false);
   const [apptTiming, setApptTiming] = useState([]);
 
-  // const makeAppt = (preAppointments) => {
-  //   return [...apptTiming, preAppointments];
-  // };
-
   const makeAppt = async (apptTiming) => {
     try {
       const response = await fetch(`/api/booking`, {
@@ -150,7 +146,6 @@ function Times({ date, selectArtist, customerInfo }) {
     };
 
     const disabledTimeslotForBooking = (findDate, findTimeSlot) => {
-      console.log(`apptTiming: ${JSON.stringify(apptTiming)}`);
       // console.log(`findDate: ${findDate}`);
       // console.log(`findTimeSlot: ${findTimeSlot}`);
       const checkBooking = apptTiming.find(
@@ -166,18 +161,15 @@ function Times({ date, selectArtist, customerInfo }) {
           const startTime = times.split(" - ")[0];
           const endTime = times.split(" - ")[1];
           //console.log(startTime)
-          // const disabledTime = checkTimeSlot(startTime) && !futureDate || disabledTimeslotForBooking(date.toLocaleDateString("en-UK"), times);
           const disabledTime =
             timeSlotDisabled(startTime, futureDate, endTime, selectArtist) ||
             disabledTimeslotForBooking(date.toLocaleDateString("en-UK"), times);
-          return (
-            <div key={index}>
-              <button onClick={(e) => displayInfo(e)} disabled={disabledTime}>
-                {times}
-              </button>
-            </div>
-          );
-        })}
+            return !disabledTime ? (
+              <div key={index}>
+                <button onClick={(e) => displayInfo(e)}>{times}</button>
+              </div>
+            ) : <p>Slot booked</p>;
+          })}
         <div>
           {!dateChanged && info
             ? `Makeup session booked on ${date.toLocaleDateString(

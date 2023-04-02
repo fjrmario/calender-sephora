@@ -7,9 +7,9 @@ const AppointmentSchema = new Schema({
       id: { type: Schema.Types.ObjectId, ref: 'Location', required: true },
     },
   
-    // makeupArtist: {
-    //   id: { type: Schema.Types.ObjectId, ref: 'MakeupArtist', required: true },
-    // },
+    makeupArtist: {
+      id: { type: Schema.Types.ObjectId, ref: 'MakeupArtist', required: true },
+    },
     
     customerInfo: {
       name: { type: String, required: true },

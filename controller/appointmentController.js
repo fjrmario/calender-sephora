@@ -1,5 +1,5 @@
 const Appointment = require("../model/appointmentModel");
-// const MakeupArtist = require("../model/makeupArtistModel");
+// const MakeupArtist = require("../model/makeupArtistModel")
 
 const create = async (req, res) => {
   try {
@@ -12,6 +12,20 @@ const create = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+const findAppointment = async (req, res) => {
+  const makeupArtistId = req.params.id;
+  console.log(`makeupId: ${makeupArtistId}`);
+
+  try{
+    const findApptByMakeupArtist = await Appointment.findOne({ "makeupArtist.id": makeupArtistId  });
+    console.log(findApptByMakeupArtist);
+    res.status(200).json(findApptByMakeupArtist);
+  }catch (error) {
+    res.status(400).json({error: error.message});
+  
+  }
+}
 
   const deleteAppointment = async (req, res) => {
     const {id} = req.params
@@ -30,4 +44,5 @@ const create = async (req, res) => {
   module.exports = {
     create,
     deleteAppointment,
+    findAppointment
   };
