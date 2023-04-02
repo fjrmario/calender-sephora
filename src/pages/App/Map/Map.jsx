@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { Helmet } from 'react-helmet';
 import L from 'leaflet';
@@ -30,6 +30,8 @@ const Map = () => {
   const [locations, setLocations] = useState([]);
   const [userLatitude, setUserLatitude] = useState("");
   const [userLongitude, setUserLongitude] = useState("");
+  const initialPosition = [1.3521, 103.8198];
+  const initialZoom = 12;
   
   
   useEffect(() => {
@@ -48,6 +50,12 @@ const Map = () => {
     })
   }
 
+  const handleResetMap = () => {
+    mapRef.current.setView(initialPosition, initialZoom);
+  }
+
+  const mapRef = useRef();
+
 
   return (
     <div>
@@ -56,7 +64,7 @@ const Map = () => {
               integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossOrigin="" />
       </Helmet>
 
-      <MapContainer center={[1.2833817398360576, 103.84521723728845]} zoom={12} style={{ height: '600px' , width: '80%'}}>
+      <MapContainer ref={mapRef} center={initialPosition} zoom={initialZoom} style={{ height: '600px' , width: '80%'}}>
         <TileLayer url='https://tile.openstreetmap.org/{z}/{x}/{y}.png' maxZoom={15} attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'/>
 
         {locations.map(location => (
@@ -83,6 +91,7 @@ const Map = () => {
       <Distance latitude={userLatitude} longitude={userLongitude}/>
 
       <CurrentLocation setUserLatitude={setUserLatitude} setUserLongitude={setUserLongitude} />
+      <button onClick={handleResetMap}>Reset Map</button>
       <br />
       <br />
     </div>

@@ -4,6 +4,7 @@ import axios from "axios";
 export default function Distance({latitude,longitude}) {
 
     const [data, setData] = useState([]);
+    const [error, setError] = useState(false);
 
     
     useEffect(() => {
@@ -34,6 +35,10 @@ export default function Distance({latitude,longitude}) {
     return roundedDistance
     }
 
+    if (!latitude || !longitude) {
+        return <div>Calculating distance!</div>;
+    }
+
     const sortedData = [...data].sort((a, b) => {
         const distanceA = calculateDistance(latitude, longitude, a.latitude, a.longitude);
         const distanceB = calculateDistance(latitude, longitude, b.latitude, b.longitude);
@@ -42,11 +47,12 @@ export default function Distance({latitude,longitude}) {
 
   return (
    <div>
-      {sortedData.map(location => (
-        <p key={location._id}>
-            Distance to {location.name}: {calculateDistance(latitude, longitude, location.latitude, location.longitude)} km
-        </p>
-      ))}
+        {error && <div>Error fetching data</div>}
+        {sortedData.map(location => (
+            <p key={location._id}>
+                Distance to {location.name}: {calculateDistance(latitude, longitude, location.latitude, location.longitude)} km
+            </p>
+         ))}
     </div>
   )
 }
