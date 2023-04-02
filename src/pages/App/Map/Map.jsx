@@ -5,6 +5,8 @@ import L from 'leaflet';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 import Location from '../../../components/location';
+import CurrentLocation from '../../../components/currentLocation';
+import Distance from '../../../components/Distance';
 
 const blackIcon = new L.Icon({
   iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png',
@@ -26,17 +28,9 @@ const greenIcon = new L.Icon({
 
 const Map = () => {
   const [locations, setLocations] = useState([]);
-  const [currentLocation, setCurrentLocation] = useState(null);
-  const [distances, setDistances] = useState([]);
-
-
-  // useEffect(() => {
-  //   async function fetchDistances() {
-  //     const response = await axios.get('/api/distances');
-  //     setDistances(response.data);
-  //   }
-  //   fetchDistances();
-  // }, []);
+  const [userLatitude, setUserLatitude] = useState("");
+  const [userLongitude, setUserLongitude] = useState("");
+  
   
   useEffect(() => {
     axios.get('/api/maps').then(response => {
@@ -65,16 +59,6 @@ const Map = () => {
       <MapContainer center={[1.2833817398360576, 103.84521723728845]} zoom={12} style={{ height: '600px' , width: '80%'}}>
         <TileLayer url='https://tile.openstreetmap.org/{z}/{x}/{y}.png' maxZoom={15} attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'/>
 
-        {/* {distances.map((distance, index) => (
-        <Marker key={index} position={[distance.location.lat, distance.location.lng]} icon={greenIcon}>
-          <Popup>
-            Distance from current location: {distance.distance.toFixed(2)} meters
-          </Popup>
-        </Marker>
-        ))} */}
-
-        {currentLocation}
-
         {locations.map(location => (
           <Marker key={location._id} position={[location.latitude, location.longitude]} icon={blackIcon}>
             <Popup>
@@ -87,8 +71,20 @@ const Map = () => {
             </Popup>
           </Marker>
         ))}
+      <Marker position={[userLatitude, userLongitude]} icon={greenIcon}>
+          <Popup>
+              <div>
+                  <b>Your current location</b>
+              </div>
+          </Popup>
+      </Marker>
       </MapContainer>
       <Location onNewLocation={handleNewLocation}/>
+      <Distance latitude={userLatitude} longitude={userLongitude}/>
+
+      <CurrentLocation setUserLatitude={setUserLatitude} setUserLongitude={setUserLongitude} />
+      <br />
+      <br />
     </div>
   );
 };
