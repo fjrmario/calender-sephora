@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import BookingForm from "./BookingForm";
 
-const Booking = ({ setSelectedArtist, setLocation, setCustomerInfo, customerInfo, fetchedLocations}) => {
-  const [form, setForm] = useState({});
+const Booking = ({ setSelectedArtist, setCustomerInfo, customerInfo, fetchedLocations}) => {
+
   const [selectArtist, setSelectArtist] = useState([]);
   const [selectLocation, setSelectLocation] = useState("");
 
@@ -20,8 +20,8 @@ const Booking = ({ setSelectedArtist, setLocation, setCustomerInfo, customerInfo
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm((prevState) => ({
-      ...prevState,
+    setCustomerInfo((customerInfo) => ({
+      ...customerInfo,
       [name]: value,
     }));
     if (name === "location") {
@@ -38,24 +38,14 @@ const Booking = ({ setSelectedArtist, setLocation, setCustomerInfo, customerInfo
     }
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   setLocation(form.location);
-  //   setSelectedArtist(selectArtist.find(artist => artist.name === form.artist));
-  //   setCustomerInfo({
-  //     name: form.name,
-  //     email: form.email,
-  //   });
-  //   console.log(`selectArtist from Booking: ${selectArtist}`);
-  // };
-
   return (
     <div>
       <BookingForm
-        form={form}
         selectArtist={selectArtist}
         selectLocation={selectLocation}
         handleChange={handleChange}
+        customerInfo={customerInfo}
+        setCustomerInfo={setCustomerInfo}
         // handleSubmit={handleSubmit}
         fetchedLocations={fetchedLocations}
       />

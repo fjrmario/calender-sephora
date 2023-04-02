@@ -7,6 +7,7 @@ require('./config/database');
 const userRouter = require('./routes/userRouter');
 const calendarRouter = require('./routes/calendarRouter');
 const appointmentRouter = require('./routes/appointmentRouter');
+const locationRouter = require('./routes/locationRouter')
 const jwt = require("jsonwebtoken")
 
 const app = express();
@@ -47,6 +48,7 @@ app.get("/api/secret",  (req, res) => {
 app.use("/api/users", userRouter);
 app.use("/api/customer", calendarRouter);
 app.use("/api/booking", appointmentRouter);
+app.use("/api/maps", locationRouter)
 
 app.get("/*", function (req, res) {
   res.sendFile(path.join(__dirname, "dist", "index.html"));

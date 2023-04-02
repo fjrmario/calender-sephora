@@ -15,6 +15,7 @@ const AppointmentPage = () => {
 
   console.log(`selectArtist in ApptPage: ${JSON.stringify(selectArtist)}`);
   console.log(`location in ApptPage: ${JSON.stringify(fetchedLocations)}`);
+  console.log(`customerInfo in ApptPage: ${JSON.stringify(customerInfo)}`);
 
   useEffect(() => {
     // Fetch all locations
@@ -51,9 +52,10 @@ const AppointmentPage = () => {
           setDate={setDate}
           selectArtist={selectArtist}
           setShowTime={setShowTime}
+          customerInfo={customerInfo}
         />
       </div>
-      <DateSelect date={date} />
+      {/* <DateSelect date={date} /> */}
     </div>
   );
 };

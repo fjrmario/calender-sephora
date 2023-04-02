@@ -1,6 +1,10 @@
+import { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { Helmet } from 'react-helmet';
 import L from 'leaflet';
+import axios from 'axios';
+import { Link } from 'react-router-dom'
+import Location from '../../../components/location';
 
 const blackIcon = new L.Icon({
   iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png',
@@ -11,36 +15,82 @@ const blackIcon = new L.Icon({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png'
 });
 
+const greenIcon = new L.Icon({
+  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
 const Map = () => {
-    return (
-      <div>
+  const [locations, setLocations] = useState([]);
+  const [currentLocation, setCurrentLocation] = useState(null);
+  const [distances, setDistances] = useState([]);
+
+
+  // useEffect(() => {
+  //   async function fetchDistances() {
+  //     const response = await axios.get('/api/distances');
+  //     setDistances(response.data);
+  //   }
+  //   fetchDistances();
+  // }, []);
+  
+  useEffect(() => {
+    axios.get('/api/maps').then(response => {
+      setLocations(response.data);
+    }).catch(error => {
+      console.error(error);
+    });
+  }, []);
+
+  const handleNewLocation = () => {
+    axios.get('/api/maps').then(response => {
+      setLocations(response.data);
+    }).catch(error => {
+      console.error(error)
+    })
+  }
+
+
+  return (
+    <div>
       <Helmet>
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-              integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+              integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossOrigin="" />
       </Helmet>
 
       <MapContainer center={[1.2833817398360576, 103.84521723728845]} zoom={12} style={{ height: '600px' , width: '80%'}}>
-      <TileLayer url='https://tile.openstreetmap.org/{z}/{x}/{y}.png' maxZoom={15} attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'/>
-      <Marker position={[1.3007569461909423, 103.84514976459786]} icon={blackIcon}>
-        <Popup>
-          <b>Plaza Singapura</b>
-        </Popup>
-      </Marker>
-      <Marker position={[1.2651111493649967, 103.82207305110627]} icon={blackIcon}>
-        <Popup>
-          <b>Vivo City</b>
-        </Popup>
-      </Marker>
-      <Marker position={[1.3042291282795053, 103.83190627994239]} icon={blackIcon}>
-        <Popup>
-          <b>ION Orchard</b>
-        </Popup>
-      </Marker>
-    </MapContainer>
-    </div>
-    )
-    
-  }
-  
+        <TileLayer url='https://tile.openstreetmap.org/{z}/{x}/{y}.png' maxZoom={15} attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'/>
 
-  export default Map;
+        {/* {distances.map((distance, index) => (
+        <Marker key={index} position={[distance.location.lat, distance.location.lng]} icon={greenIcon}>
+          <Popup>
+            Distance from current location: {distance.distance.toFixed(2)} meters
+          </Popup>
+        </Marker>
+        ))} */}
+
+        {currentLocation}
+
+        {locations.map(location => (
+          <Marker key={location._id} position={[location.latitude, location.longitude]} icon={blackIcon}>
+            <Popup>
+              <div>
+                <b>{location.name}</b>
+                <br />
+                <br />
+                <Link to={`https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}`} target="_blank">Get directions</Link>
+               </div> 
+            </Popup>
+          </Marker>
+        ))}
+      </MapContainer>
+      <Location onNewLocation={handleNewLocation}/>
+    </div>
+  );
+};
+
+export default Map;

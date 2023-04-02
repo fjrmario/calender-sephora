@@ -1,27 +1,26 @@
-const BookingForm = ({ form, selectArtist, selectLocation, handleChange, handleSubmit, fetchedLocations }) => {
+const BookingForm = ({ selectArtist, selectLocation, handleChange, fetchedLocations, customerInfo, setCustomerInfo }) => {
   
   return (
-    <form onSubmit={handleSubmit}>
+    <>
       <label>Name:</label>
-      <input type="text" name="name" onChange={handleChange} />
+      <input type="text" name="name" value={customerInfo.name} onChange={handleChange} />
       <br />
       <label>Email:</label>
-      <input type="text" name="email" onChange={handleChange} />
+      <input type="text" name="email" value={customerInfo.email} onChange={handleChange} />
 
       <label htmlFor="location">Choose a location:</label>
 
       <select name="location" onChange={handleChange}>
-  <option value="">--Please choose location</option>
-  {fetchedLocations &&
-    fetchedLocations.map((location, index) => {
-      return (
-        <option key={index} value={location._id}>
-          {location.name}
-        </option>
-      );
-    })}
-</select>
-
+        <option value="">--Please choose location</option>
+        {fetchedLocations &&
+          fetchedLocations.map((location, index) => {
+            return (
+              <option key={index} value={location._id}>
+                {location.name}
+              </option>
+            );
+          })}
+      </select>
 
       {selectLocation && (
         <select name="artist" onChange={handleChange}>
@@ -34,8 +33,7 @@ const BookingForm = ({ form, selectArtist, selectLocation, handleChange, handleS
           ))}
         </select>
       )}
-
-    </form>
+    </>
   );
 };
 
