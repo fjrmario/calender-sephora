@@ -15,10 +15,14 @@ const create = async (req, res) => {
 
 const findAppointment = async (req, res) => {
   const makeupArtistId = req.params.id;
+  const apptDate = req.params.date;
   console.log(`makeupId: ${makeupArtistId}`);
 
   try{
-    const findApptByMakeupArtist = await Appointment.findOne({ "makeupArtist.id": makeupArtistId  });
+    const findApptByMakeupArtist = await Appointment.findOne({ 
+      "makeupArtist.id": makeupArtistId,
+      date: apptDate,  
+    });
     console.log(findApptByMakeupArtist);
     res.status(200).json(findApptByMakeupArtist);
   }catch (error) {

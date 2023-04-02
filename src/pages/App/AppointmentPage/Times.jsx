@@ -82,6 +82,19 @@ function Times({ date, selectArtist, customerInfo }) {
       setInfo(false);
     }, [date]);
 
+    useEffect(() => {
+      if (selectArtist && date) {
+        fetch(`/api/booking/${selectArtist._id}/${selectArtist.date}`)
+          .then((response) => response.json())
+          .then((data) => setApptTiming(data))
+          .catch((error) =>
+            console.error("Error fetching booked appointments:", error)
+          );
+      } else {
+        setApptTiming([]);
+      }
+    }, [selectArtist, date]);
+
     const isTimeSlotWithinWorkingHours = (startTime, endTime, selectArtist) => {
       const artist = selectArtist?.workingHours;
       console.log(`artist: ${JSON.stringify(artist)}`);
@@ -146,8 +159,6 @@ function Times({ date, selectArtist, customerInfo }) {
     };
 
     const disabledTimeslotForBooking = (findDate, findTimeSlot) => {
-      // console.log(`findDate: ${findDate}`);
-      // console.log(`findTimeSlot: ${findTimeSlot}`);
       const checkBooking = apptTiming.find(
         (appt) => appt.date === findDate && appt.timeSlot === findTimeSlot
       ); //find for appt made for the same date and that time slot
@@ -168,7 +179,7 @@ function Times({ date, selectArtist, customerInfo }) {
               <div key={index}>
                 <button onClick={(e) => displayInfo(e)}>{times}</button>
               </div>
-            ) : <p>Slot booked</p>;
+            ) : null;
           })}
         <div>
           {!dateChanged && info
