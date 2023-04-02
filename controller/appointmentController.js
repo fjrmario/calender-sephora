@@ -1,4 +1,5 @@
 const Appointment = require("../model/appointmentModel");
+const moment = require('moment');
 // const MakeupArtist = require("../model/makeupArtistModel")
 
 const create = async (req, res) => {
@@ -15,11 +16,11 @@ const create = async (req, res) => {
 
 const findAppointment = async (req, res) => {
   const makeupArtistId = req.params.id;
-  const apptDate = req.params.date;
+  const apptDate = moment(req.params.date).format("DD/MM/YYYY");
   console.log(`makeupId: ${makeupArtistId}`);
-
+  console.log(`apptDate: ${apptDate}`);
   try{
-    const findApptByMakeupArtist = await Appointment.findOne({ 
+    const findApptByMakeupArtist = await Appointment.find({ 
       "makeupArtist.id": makeupArtistId,
       date: apptDate,  
     });

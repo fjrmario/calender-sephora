@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../App.css";
 import { time } from "../../../../time";
+import  moment  from 'moment';
 
 const now = new Date();
 const currentTime = now.toLocaleTimeString([], {
@@ -84,9 +85,13 @@ function Times({ date, selectArtist, customerInfo }) {
 
     useEffect(() => {
       if (selectArtist && date) {
-        fetch(`/api/booking/${selectArtist._id}/${selectArtist.date}`)
+        
+        fetch(`/api/booking/${selectArtist._id}/${moment(date).format('YYYY-MM-DD')}`)
           .then((response) => response.json())
           .then((data) => setApptTiming(data))
+          .then((data) => {
+            console.log("Fetched data: ", data)
+          })
           .catch((error) =>
             console.error("Error fetching booked appointments:", error)
           );
@@ -158,13 +163,14 @@ function Times({ date, selectArtist, customerInfo }) {
       );
     };
 
-    const disabledTimeslotForBooking = (findDate, findTimeSlot) => {
-      const checkBooking = apptTiming.find(
-        (appt) => appt.date === findDate && appt.timeSlot === findTimeSlot
-      ); //find for appt made for the same date and that time slot
-      console.log(`checkBooking: ${JSON.stringify(checkBooking)}`);
-      return checkBooking;
-    };
+    // const disabledTimeslotForBooking = (findDate, findTimeSlot) => {
+    //   const checkBooking = apptTiming.find(
+    //     (appt) => appt.date === findDate && appt.timeSlot === findTimeSlot
+    //     ); //find for appt made for the same date and that time slot
+    //     console.log(`apptTiming: ${apptTiming}`)
+    //   console.log(`checkBooking: ${JSON.stringify(checkBooking)}`);
+    //   return checkBooking;
+    // };
 
     return (
       <div className="times">
@@ -173,8 +179,7 @@ function Times({ date, selectArtist, customerInfo }) {
           const endTime = times.split(" - ")[1];
           //console.log(startTime)
           const disabledTime =
-            timeSlotDisabled(startTime, futureDate, endTime, selectArtist) ||
-            disabledTimeslotForBooking(date.toLocaleDateString("en-UK"), times);
+            timeSlotDisabled(startTime, futureDate, endTime, selectArtist)
             return !disabledTime ? (
               <div key={index}>
                 <button onClick={(e) => displayInfo(e)}>{times}</button>
