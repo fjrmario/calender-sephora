@@ -26,6 +26,7 @@ const Cal = ({ date, setDate, selectArtist, setShowTime }) => {
           value={date}
           onClickDay={() => {
             setShowTime(true);
+            
           }}
           minDate={
             selectArtist && selectArtist.workingSchedule
