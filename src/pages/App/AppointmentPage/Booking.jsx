@@ -8,7 +8,7 @@ const Booking = ({ setSelectedArtist, setCustomerInfo, customerInfo, fetchedLoca
 
   useEffect(() => {
     if (selectLocation) {
-      fetch(`/api/customer/${selectLocation}`)
+      fetch(`/api/calender/${selectLocation}`)
         .then((response) => response.json())
         .then((data) => setSelectArtist(data))
         .catch((error) =>
