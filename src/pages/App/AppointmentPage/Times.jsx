@@ -48,7 +48,7 @@ function Times({ date, selectArtist, customerInfo }) {
       console.error("Error creating appointment:", error);
     }
   };
-  console.log("selectArtist:", JSON.stringify(selectArtist, null, 2));
+  console.log("selectArtist:", JSON.stringify(selectArtist));
 
   const displayInfo = async (e) => {
     setInfo(true);
@@ -76,7 +76,9 @@ function Times({ date, selectArtist, customerInfo }) {
   };
 
     const todayDate = new Date();
+    todayDate.setHours(0, 0, 0, 0);
     const futureDate = date > todayDate;
+    console.log(`date in Times: ${date}`)
 
     useEffect(() => {
       setDateChanged(true);
@@ -179,7 +181,7 @@ function Times({ date, selectArtist, customerInfo }) {
           const endTime = times.split(" - ")[1];
           //console.log(startTime)
           const disabledTime =
-            timeSlotDisabled(startTime, futureDate, endTime, selectArtist)
+            timeSlotDisabled(startTime, futureDate, endTime, selectArtist);
             return !disabledTime ? (
               <div key={index}>
                 <button onClick={(e) => displayInfo(e)}>{times}</button>
