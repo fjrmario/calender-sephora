@@ -29,7 +29,7 @@ const Cal = ({ date, setDate, selectArtist, setShowTime }) => {
           }}
           minDate={
             selectArtist && selectArtist.workingSchedule
-              ? new Date(getMinDate(selectArtist)) || todayDate()
+              ? new Date(Math.max(new Date(getMinDate(selectArtist)), todayDate()))
               : todayDate()
           }
           maxDate={
