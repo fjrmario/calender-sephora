@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../App.css";
 import { time } from "../../../../time";
-import  moment  from 'moment';
+import  moment from 'moment';
 
 const now = new Date();
 const currentTime = now.toLocaleTimeString([], {
@@ -100,6 +100,8 @@ function Times({ date, selectArtist, customerInfo }) {
         setApptTiming([]);
       }
     }, [selectArtist, date]);
+
+    
 
     const isTimeSlotWithinWorkingHours = (startTime, endTime, selectArtist) => {
       const artist = selectArtist?.workingHours;

@@ -9,26 +9,29 @@ const handleLogout = () => {
     logout();
 }
   return (
-    <nav>
-      <ul>
-        <li>
-          <NavLink to="/orders">Order History</NavLink>
-        </li>
+    <>
+      {user ? (<p>Hello {user}</p>): null}
+      <nav>
+        <ul>
+          <li>
+            <NavLink to="/orders">Order History</NavLink>
+          </li>
 
-        <li>
-          <NavLink to="/orders/new">New Order</NavLink>
-        </li>
+          <li>
+            <NavLink to="/orders/new">New Order</NavLink>
+          </li>
 
-        <li>
-          <NavLink to="/maps">Map</NavLink>
-        </li>
+          <li>
+            <NavLink to="/maps">Map</NavLink>
+          </li>
 
-        <li>
-          <NavLink to="/booking">Appointment Booking</NavLink>
-        </li>
-        {/* <li>{welcomeMessage}</li> */}
-        <button onClick={handleLogout}>Logout</button>
-      </ul>
-    </nav>
+          <li>
+            <NavLink to="/booking">Appointment Booking</NavLink>
+          </li>
+          {/* <li>{welcomeMessage}</li> */}
+          <button onClick={handleLogout}>Logout</button>
+        </ul>
+      </nav>
+    </>
   );
 }

@@ -6,12 +6,13 @@ import { Routes, Route } from "react-router-dom";
 import NavBar from "../../components/NavBar";
 import Map from "./Map/Map";
 import AppointmentPage from "./AppointmentPage/AppointmentPage";
+import SignUpForm from "./AuthPage/SignUpForm";
 
 
 const App = () => {
   //user === null;
 
-  const [user, setUser] = useState('user');
+  const [user, setUser] = useState("");
 
   if (user === null) {
     return (
@@ -23,12 +24,13 @@ const App = () => {
   } else{
     return (
       <main className="App">
-        <NavBar />
+        <NavBar user={user} />
         <Routes>
         <Route path="/orders/new" element={<NewOrderPage />} />
         <Route path="/orders" element={<OrderHistoryPage/>} />
         <Route path="/maps" element={<Map/>} />
         <Route path="/booking" element={<AppointmentPage/>} />
+        <Route path="/signup" element={<SignUpForm/>} />
         </Routes>
         
       </main>

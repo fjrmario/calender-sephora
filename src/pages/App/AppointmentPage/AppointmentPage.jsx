@@ -55,7 +55,7 @@ const AppointmentPage = () => {
           customerInfo={customerInfo}
         />
       </div>
-      {/* <DateSelect date={date} /> */}
+      <DateSelect date={date} />
     </div>
   );
 };

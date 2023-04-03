@@ -1,5 +1,6 @@
 const Appointment = require("../model/appointmentModel");
 const moment = require('moment');
+
 // const MakeupArtist = require("../model/makeupArtistModel")
 
 const create = async (req, res) => {
@@ -16,21 +17,22 @@ const create = async (req, res) => {
 
 const findAppointment = async (req, res) => {
   const makeupArtistId = req.params.id;
-  const apptDate = moment(req.params.date).format("DD/MM/YYYY");
   console.log(`makeupId: ${makeupArtistId}`);
-  console.log(`apptDate: ${apptDate}`);
-  try{
+  try {
+    const apptDate = moment(req.params.date).format("DD/MM/YYYY"); 
+    console.log("Received date in server:", req.params.date);
+    console.log(`apptDate: ${apptDate}`);
     const findApptByMakeupArtist = await Appointment.find({ 
       "makeupArtist.id": makeupArtistId,
       date: apptDate,  
     });
     console.log(findApptByMakeupArtist);
     res.status(200).json(findApptByMakeupArtist);
-  }catch (error) {
-    res.status(400).json({error: error.message});
-  
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
-}
+};
+ 
 
   const deleteAppointment = async (req, res) => {
     const {id} = req.params

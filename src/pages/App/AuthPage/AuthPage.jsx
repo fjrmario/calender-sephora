@@ -1,4 +1,4 @@
-import FSignUpForm from "./FSignUpForm";
+import FSignUpForm from "./SignUpForm";
 import SignUpForm from "./SignUpForm";
 import LoginForm from "./LoginForm";
 
