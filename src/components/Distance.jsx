@@ -12,6 +12,7 @@ export default function Distance({latitude,longitude}) {
           setData(response.data);
         }).catch(error => {
           console.error(error);
+          setError(true);
         });
     }, []);
 
@@ -43,7 +44,7 @@ export default function Distance({latitude,longitude}) {
         const distanceA = calculateDistance(latitude, longitude, a.latitude, a.longitude);
         const distanceB = calculateDistance(latitude, longitude, b.latitude, b.longitude);
         return distanceA - distanceB;
-      });
+    });
 
   return (
    <div>
