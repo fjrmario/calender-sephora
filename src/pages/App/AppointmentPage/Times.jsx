@@ -76,7 +76,6 @@ function Times({ date, selectArtist, customerInfo }) {
   };
 
     const todayDate = new Date();
-    todayDate.setHours(0, 0, 0, 0);
     const futureDate = date > todayDate;
     console.log(`date in Times: ${date}`)
 
@@ -159,11 +158,15 @@ function Times({ date, selectArtist, customerInfo }) {
         endTime,
         selectArtist
       );
+
+      const isTimeSlotBooked = apptTiming.some((appt) => appt.timeslot === `${startTime} - ${endTime}`)
       return (
         isPastTimeSlot ||
         !isMakeUpArtistWithinWorkingHours ||
-        isMakeUpArtistWithinBreakHours
+        isMakeUpArtistWithinBreakHours ||
+        isTimeSlotBooked
       );
+
     };
 
     // const disabledTimeslotForBooking = (findDate, findTimeSlot) => {
