@@ -23,7 +23,10 @@ const AppointmentSchema = new Schema({
       type: String,
       required: true,
     },
-  });
+    
+  },
+  { timestamps: true} 
+  );
   
   const Appointment= mongoose.model('Appointment', AppointmentSchema);
   module.exports = Appointment

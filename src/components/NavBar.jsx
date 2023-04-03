@@ -28,6 +28,11 @@ const handleLogout = () => {
           <li>
             <NavLink to="/booking">Appointment Booking</NavLink>
           </li>
+
+          <li>
+            <NavLink to="/history">Upcoming Appointments</NavLink>
+          </li>
+
           {/* <li>{welcomeMessage}</li> */}
           <button onClick={handleLogout}>Logout</button>
         </ul>
