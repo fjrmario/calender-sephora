@@ -42,14 +42,16 @@ const findAppointmentByCustomerName = async (req, res) => {
     const getAppointments = await Appointment.find({
       "customerInfo.name": customerName,
       date: {
-        $gte: currentDate.toISOString(), 
+        $gte: moment(currentDate, "DD/MM/YYYY").toDate(),
       },
       createdAt: {
         $gte: currentTime.toISOString(),
       }
     });
 
-    console.log(getAppointments)
+    console.log('customerName:', customerName);
+    console.log('currentDate:', currentDate);
+    console.log('currentTime:', currentTime);
     res.status(200).json(getAppointments);
   } catch (error) {
     res.status(400).json({ error: error.message });
