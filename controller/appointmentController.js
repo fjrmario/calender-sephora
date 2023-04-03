@@ -36,22 +36,26 @@ const findAppointmentByDate = async (req, res) => {
 const findAppointmentByCustomerName = async (req, res) => {
   try {
     const { customerName } = req.params;
-    const currentDate = moment().startOf("day");
-    const currentTime = moment();
+    const currentDate = moment().startOf("day").format("DD/MM/YYYY")
+    const currentTime = moment().format("HH:mm");
+    
+    console.log('customerName:', customerName);
+    console.log('currentTime:', currentTime);
+    // console.log('currentTime:', currentTime.toDate());
+
 
     const getAppointments = await Appointment.find({
       "customerInfo.name": customerName,
       date: {
-        $gte: moment(currentDate, "DD/MM/YYYY").toDate(),
+        $gte: currentDate,
       },
-      createdAt: {
-        $gte: currentTime.toISOString(),
+      timeslot: {
+        $gte: currentTime,
       }
-    });
+    }).sort({ date: 1 });
 
-    console.log('customerName:', customerName);
-    console.log('currentDate:', currentDate);
-    console.log('currentTime:', currentTime);
+    console.log('getAppointments:', getAppointments);
+
     res.status(200).json(getAppointments);
   } catch (error) {
     res.status(400).json({ error: error.message });
