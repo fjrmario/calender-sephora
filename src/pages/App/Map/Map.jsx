@@ -32,7 +32,10 @@ const Map = () => {
   const [userLongitude, setUserLongitude] = useState("");
   const initialPosition = [1.3521, 103.8198];
   const initialZoom = 12;
+  const [streetViewImageUrl, setStreetViewImageUrl] = useState('');
+  const [panorama, setPanorama] = useState(null);
   
+  const mapRef = useRef();
   
   useEffect(() => {
     axios.get('/api/maps').then(response => {
@@ -41,6 +44,39 @@ const Map = () => {
       console.error(error);
     });
   }, []);
+
+  useEffect(() => {
+    // Create a StreetViewService object when the map is ready
+    if (mapRef.current) {
+      const streetViewService = new google.maps.StreetViewService();
+      streetViewService.getPanorama({location: initialPosition}, (data, status) => {
+        if (status === 'OK') {
+          setPanorama(data.location.pano);
+        } else{
+          console.error('Street view request failed:', status)
+        }
+      });
+    }
+  }, [mapRef.current]);
+
+  function getStreetViewImageUrl(lat, lng, radius) {
+    const radiusParam = radius ? `&radius=${radius}` : '';
+    const baseUrl = 'https://maps.googleapis.com/maps/api/streetview';
+    const size = '300x200'; 
+    const heading = '210'; 
+    const pitch = '10'; 
+    const apiKey = 'AIzaSyDDDJIzJGH2EKzuO21LzTsg6Hxiyq04Tc4';
+    const adjustedLat = lat + (Math.random() * radius * 2 - radius) * 0.0001;
+    const adjustedLng = lng + (Math.random() * radius * 2 - radius) * 0.0001;
+  
+    return `${baseUrl}?size=${size}&location=${adjustedLat},${adjustedLng}&heading=${heading}&pitch=${pitch}&key=${apiKey}${radiusParam}`;
+  }
+
+  function handleShowStreetView() {
+    const radius = 500000
+    const imageUrl = getStreetViewImageUrl(location.latitude, location.longitude, radius);
+    setStreetViewImageUrl(imageUrl);
+  }
 
   const handleNewLocation = () => {
     axios.get('/api/maps').then(response => {
@@ -53,8 +89,6 @@ const Map = () => {
   const handleResetMap = () => {
     mapRef.current.setView(initialPosition, initialZoom);
   }
-
-  const mapRef = useRef();
 
 
   return (
@@ -75,6 +109,16 @@ const Map = () => {
                 <br />
                 <br />
                 <Link to={`https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}`} target="_blank">Get directions</Link>
+                <br />
+                <br />
+                <button onClick={handleShowStreetView}>Show Street View</button>
+                <br />
+                <br />
+                {streetViewImageUrl && <img src={streetViewImageUrl} alt="Street View" />}
+                <Link to={`https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}`} target="_blank">Get directions</Link>
+                <br />
+                <br />
+                <button onClick={() => window.open(`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${location.latitude},${location.longitude}`, '_blank')}>View street view</button>
                </div> 
             </Popup>
           </Marker>
