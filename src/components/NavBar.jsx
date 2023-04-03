@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { logout } from "../utilities/user-service"
+import { logout } from "../utilities/users-service"
 
 export default function NavBar({ user, setUser }) {
 //   const welcomeMessage = user === null ? "" : `Welcome ${user.name}`;

@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUser, signUp } from "../../../utilities/user-service";
+import { getUser, signUp } from "../../../utilities/users-service";
 
 export default function SignUpForm({ setUser }) {
+  //? const [name, setName] = useState("")
   const [state, setState] = useState({
     name: "",
     email: "",
     password: "",
+    confirm: "",
   });
-
   const [error, setError] = useState("No Error");
   const navigate = useNavigate();
 

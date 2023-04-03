@@ -20,7 +20,7 @@ const AppointmentPage = () => {
   useEffect(() => {
     // Fetch all locations
     const fetchLocation = async () => {
-      const response = await fetch("/api/customer");
+      const response = await fetch("/api/calender");
       const locationData = await response.json();
       setFetchedLocations(locationData); // Set the fetched location data to the state
     };

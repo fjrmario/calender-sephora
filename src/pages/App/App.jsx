@@ -10,8 +10,6 @@ import SignUpForm from "./AuthPage/SignUpForm";
 
 
 const App = () => {
-  //user === null;
-
   const [user, setUser] = useState("");
 
   if (user === null) {
@@ -26,11 +24,11 @@ const App = () => {
       <main className="App">
         <NavBar user={user} />
         <Routes>
-        <Route path="/orders/new" element={<NewOrderPage />} />
-        <Route path="/orders" element={<OrderHistoryPage/>} />
-        <Route path="/maps" element={<Map/>} />
-        <Route path="/booking" element={<AppointmentPage/>} />
-        <Route path="/signup" element={<SignUpForm/>} />
+          <Route path="/orders/new" element={<NewOrderPage />} />
+          <Route path="/orders" element={<OrderHistoryPage/>} />
+          <Route path="/maps" element={<Map/>} />
+          <Route path="/booking" element={<AppointmentPage/>} />
+          <Route path="/signup" element={<SignUpForm/>} />
         </Routes>
         
       </main>

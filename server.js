@@ -20,17 +20,17 @@ app.get("/api", (req, res) => {
   res.send("Hello World!");
 });
 
-app.get("/api/secret",  (req, res) => {
-// app.get("/api/secret", isLoggedIn, (req, res) => {
-  const authorization = req.headers.authorization;
-  const token = authorization.split(" ")[1];
-  const decode = jwt.verify(token, process.env.JWT_SECRET);
-  if (decode) {
-    res.json({ message : "secret"})
-  } else {
-    res.status(403).json({ message: "sorry"})
-  }
-});
+// app.get("/api/secret",  (req, res) => {
+// // app.get("/api/secret", isLoggedIn, (req, res) => {
+//   const authorization = req.headers.authorization;
+//   const token = authorization.split(" ")[1];
+//   const decode = jwt.verify(token, process.env.JWT_SECRET);
+//   if (decode) {
+//     res.json({ message : "secret"})
+//   } else {
+//     res.status(403).json({ message: "sorry"})
+//   }
+// });
 
 
 const isLoggedIn = (req, res, next) => {
@@ -45,8 +45,8 @@ const isLoggedIn = (req, res, next) => {
   }
 };
       
-app.use("/api/users", userRouter);
-app.use("/api/customer", calendarRouter);
+app.use("/api/customer", userRouter);
+app.use("/api/calender", calendarRouter);
 app.use("/api/booking", appointmentRouter);
 app.use("/api/maps", locationRouter)
 
