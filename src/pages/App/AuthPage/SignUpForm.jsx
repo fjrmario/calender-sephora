@@ -1,28 +1,53 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUser, signUp } from "../../../utilities/users-service";
 
-export default function SignUpForm({ setUser }) {
-  //? const [name, setName] = useState("")
+export default function SignUpForm() {
+  const navigate = useNavigate();
   const [state, setState] = useState({
     name: "",
     email: "",
     password: "",
     confirm: "",
   });
-  const [error, setError] = useState("No Error");
-  const navigate = useNavigate();
+  const [error, setError] = useState("");
 
   const disable = state.password !== state.confirm;
+
+  const newCustomer = async (userData) => {
+    try {
+      const response = await fetch(`/api/customer/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (!response.ok) {
+        throw new Error("User registration failed");
+      }
+
+      const data = await response.json();
+      return data.token;
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await signUp(state);
-      setUser(getUser());
-      navigate("/orders");
+      await newCustomer(state);
+      setState({
+        name:"",
+        email: "",
+        password: "",
+        confirm: "",
+      })
+      navigate("/login");
     } catch (error) {
       setError(error.message);
+      console.error(`Error: ${error.message}`)
     }
   };
 

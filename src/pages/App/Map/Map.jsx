@@ -33,8 +33,8 @@ const Map = () => {
   const initialPosition = [1.3521, 103.8198];
   const initialZoom = 12;
   const [streetViewImageUrl, setStreetViewImageUrl] = useState('');
+  const [streetViewLocation, setStreetViewLocation] = useState(null);
   const [panorama, setPanorama] = useState(null);
-  
   const mapRef = useRef();
   
   useEffect(() => {
@@ -61,22 +61,36 @@ const Map = () => {
 
   function getStreetViewImageUrl(lat, lng, radius) {
     const radiusParam = radius ? `&radius=${radius}` : '';
+    const adjustedLat = lat + (Math.random() * radius * 2 - radius) * 0.0001;
+    const adjustedLng = lng + (Math.random() * radius * 2 - radius) * 0.0001;
     const baseUrl = 'https://maps.googleapis.com/maps/api/streetview';
     const size = '300x200'; 
     const heading = '210'; 
     const pitch = '10'; 
-    const apiKey = 'AIzaSyDDDJIzJGH2EKzuO21LzTsg6Hxiyq04Tc4';
-    const adjustedLat = lat + (Math.random() * radius * 2 - radius) * 0.0001;
-    const adjustedLng = lng + (Math.random() * radius * 2 - radius) * 0.0001;
-  
-    return `${baseUrl}?size=${size}&location=${adjustedLat},${adjustedLng}&heading=${heading}&pitch=${pitch}&key=${apiKey}${radiusParam}`;
-  }
 
-  function handleShowStreetView() {
-    const radius = 500000
-    const imageUrl = getStreetViewImageUrl(location.latitude, location.longitude, radius);
-    setStreetViewImageUrl(imageUrl);
-  }
+    const location = new window.google.maps.LatLng(adjustedLat, adjustedLng);
+    const streetViewService = new window.google.maps.StreetViewService();
+    const apiKey = 'AIzaSyDDDJIzJGH2EKzuO21LzTsg6Hxiyq04Tc4';
+
+    streetViewService.getPanorama({ location, radius }, (data, status) => {
+      if (status === window.google.maps.StreetViewStatus.OK) {
+        // Use the panorama ID to construct the street view image URL
+        const panoId = data.location.pano;
+        const imageUrl = `${baseUrl}?size=${size}&pano=${panoId}&key=${apiKey}`;
+        setStreetViewImageUrl(imageUrl);
+      } else {
+        console.log(`No street view available for location: ${location}`);
+        const imageUrl = `${baseUrl}?size=${size}&location=${adjustedLat},${adjustedLng}&heading=${heading}&pitch=${pitch}&key=${apiKey}${radiusParam}`;
+        setStreetViewImageUrl(imageUrl);
+  
+        }
+    })}
+
+    function handleShowStreetView(location) {
+      const radius = 50
+      setStreetViewImageUrl(null)
+      getStreetViewImageUrl(location.latitude, location.longitude, radius);
+    }
 
   const handleNewLocation = () => {
     axios.get('/api/maps').then(response => {
@@ -89,7 +103,6 @@ const Map = () => {
   const handleResetMap = () => {
     mapRef.current.setView(initialPosition, initialZoom);
   }
-
 
   return (
     <div>
@@ -111,14 +124,11 @@ const Map = () => {
                 <Link to={`https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}`} target="_blank">Get directions</Link>
                 <br />
                 <br />
-                <button onClick={handleShowStreetView}>Show Street View</button>
+                <button onClick={() => handleShowStreetView(location)}>Click me repeatedly to show all pictures nearby the area!</button>
                 <br />
                 <br />
                 {streetViewImageUrl && <img src={streetViewImageUrl} alt="Street View" />}
-                <Link to={`https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}`} target="_blank">Get directions</Link>
-                <br />
-                <br />
-                <button onClick={() => window.open(`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${location.latitude},${location.longitude}`, '_blank')}>View street view</button>
+                <button onClick={() => window.open(`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${location.latitude},${location.longitude}`, '_blank')}>Still lost? This could help</button>
                </div> 
             </Popup>
           </Marker>
@@ -132,7 +142,7 @@ const Map = () => {
       </Marker>
       </MapContainer>
       <Location onNewLocation={handleNewLocation}/>
-      <Distance latitude={userLatitude} longitude={userLongitude}/>
+      <Distance latitude={userLatitude} longitude={userLongitude} mapRef={mapRef}/>
 
       <CurrentLocation setUserLatitude={setUserLatitude} setUserLongitude={setUserLongitude} />
       <button onClick={handleResetMap}>Reset Map</button>

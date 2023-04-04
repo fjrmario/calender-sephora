@@ -9,22 +9,18 @@ export default function Location({onNewLocation}) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // send a request to Google Maps Geocoding API to get the latitude and longitude coordinates of the postal code
     axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${postalCode}&key=${window.GOOGLE_MAPS_API_KEY}`)
       .then(response => {
         const results = response.data.results;
         if (results && results.length > 0) {
           const result = results[0];
-          // update the latitude and longitude state with the values from the API response
           setLatitude(result.geometry.location.lat);
           setLongitude(result.geometry.location.lng);
   
-          // make the post request to save the new location
           const newLocation = { name, latitude: result.geometry.location.lat, longitude: result.geometry.location.lng };
           axios.post('/api/maps', newLocation)
             .then(response => {
               console.log(response.data);
-              // reset the form after submission
               setName('');
               setLatitude(null);
               setLongitude(null);

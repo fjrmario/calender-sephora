@@ -1,13 +1,23 @@
+import {Routes, Route, Link} from "react-router-dom"
 import SignUpForm from "./SignUpForm";
 import LoginForm from "./LoginForm";
+import NavBar from "../../../components/NavBar";
 
-export default function AuthPage({ setUser }) {
+
+export default function AuthPage({ setUser, user }) {
+
   return (
     <>
-      <h1>AuthPage</h1>
-      {/* <LoginForm /> // error here */}
-      <h2>SignUpForm</h2>
-      <SignUpForm setUser={setUser} />
+    <Link to="/signup">
+        <button>New User</button>
+    </Link>
+    <Link to="/login">
+        <button>Log in</button>
+    </Link>
+      <Routes>
+        <Route path="/login" element={<LoginForm setUser={setUser} />}/>
+        <Route path="/signup" element={<SignUpForm setUser={setUser} />}/>
+      </Routes>
     </>
   );
 }

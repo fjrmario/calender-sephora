@@ -1,4 +1,6 @@
 const Appointment = require("../model/appointmentModel");
+const Location = require("../model/locationModel")
+const MakeupArtist = require("../model/makeupArtistModel")
 const moment = require("moment");
 
 // const MakeupArtist = require("../model/makeupArtistModel")
@@ -47,16 +49,13 @@ const findAppointmentByCustomerName = async (req, res) => {
     const getAppointments = await Appointment.find({
       "customerInfo.name": customerName,
       date: {
+        // $gte: "14/04/20203",
         $gte: currentDate,
-      },
-      timeslot: {
-        $gte: currentTime,
-      }
-    }).sort({ date: 1 });
 
-    console.log('getAppointments:', getAppointments);
-
-    res.status(200).json(getAppointments);
+      }})
+      .sort({ date: 1 })
+      .populate('location.id makeupArtist.id').sort({ date: 1, timeslot: 1 });
+      res.status(200).json(getAppointments);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

@@ -1,5 +1,9 @@
-export default async function LoginForm() {
-  // const [error, setError] = useState("No error");
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+export default function LoginForm() {
+  const [error, setError] = useState("");
+  const navigate = useNavigate()
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -7,9 +11,8 @@ export default async function LoginForm() {
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
     console.log(data);
-
     try {
-      const response = await fetch("/api/users/login", {
+      const response = await fetch("/api/customer/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -19,28 +22,9 @@ export default async function LoginForm() {
       if (!response.ok) {
         throw new Error("Network response was not OK");
       }
-      const token = await response.json();
-      if (token.token) {
-      }
+      navigate("/booking")
     } catch (error) {
-      // setError(error.message);
-    }
-  };
-
-  const handleSecret = async () => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY0MjJhMzJkNTViMTM2OWQ5ZTY5OTEzYyIsIm5hbWUiOiJzaW1vbiIsImVtYWlsIjoic2ltb24yQGdhLmNvbSIsIl9fdiI6MH0sImlhdCI6MTY3OTk5MTYwOSwiZXhwIjoxNjc5OTkxNjY5fQ.bCPxXXm901FAaIeIbW8CN-F-0G3p90QGk_9OKYCgJSg";
-    try {
-      const response = await fetch("/api/secret", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      // setError(error.message);
+      setError(error.message);
     }
   };
 
@@ -58,7 +42,9 @@ export default async function LoginForm() {
           <button>Login</button>
         </fieldset>
       </form>
-      <button onClick={handleSecret}>Secret</button>
+        <Link to="/signup">
+        <button>New User</button>
+      </Link>
     </>
   );
 }

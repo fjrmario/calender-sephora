@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const SALT_ROUNDS = 10;
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
-const userSchema = new Schema({
+const customerSchema = new Schema({
     name: {type: String, required: true},
     email: {
       type: String,
@@ -20,7 +21,7 @@ const userSchema = new Schema({
     }
   });
 
-  userSchema.pre("save", async function (next) {
+  customerSchema.pre("save", async function (next) {
     // 'this' is the user doc
     if (!this.isModified("password")) return next();
     // update the password with the computed hash
@@ -28,12 +29,12 @@ const userSchema = new Schema({
     return next();
   });
 
-  userSchema.set("toJSON", {
+  customerSchema.set("toJSON", {
     transform: function (doc, ret) {
       delete ret["password"];
       return ret;
     },
   });
   
-  const User = mongoose.model('User', userSchema);
-  module.exports = User
+  const Customer = mongoose.model('Customer', customerSchema);
+  module.exports = Customer

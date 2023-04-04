@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from "axios";
 
-export default function Distance({latitude,longitude}) {
+export default function Distance({latitude,longitude, mapRef}) {
 
     const [data, setData] = useState([]);
     const [error, setError] = useState(false);
@@ -46,13 +46,18 @@ export default function Distance({latitude,longitude}) {
         return distanceA - distanceB;
     });
 
+    function handleZoom(location){
+      console.log(location)
+      mapRef.current.setView([location.latitude, location.longitude], 15)
+    }
+
   return (
    <div>
         {error && <div>Error fetching data</div>}
         {sortedData.map(location => (
-            <p key={location._id}>
+            <button onClick={()=>handleZoom(location)} key={location._id}>
                 Distance to {location.name}: {calculateDistance(latitude, longitude, location.latitude, location.longitude)} km
-            </p>
+            </button>
          ))}
     </div>
   )

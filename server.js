@@ -4,16 +4,18 @@ const path = require("path");
 const logger = require("morgan");
 require('dotenv').config();
 require('./config/database');
-const userRouter = require('./routes/userRouter');
+const jwt = require("jsonwebtoken")
+const cors = require("cors")
+const customerRouter = require('./routes/userRouter');
 const calendarRouter = require('./routes/calendarRouter');
 const appointmentRouter = require('./routes/appointmentRouter');
 const locationRouter = require('./routes/locationRouter')
-const jwt = require("jsonwebtoken")
 
 const app = express();
 
 app.use(logger("dev"));
 app.use(express.json());
+app.use(cors())
 app.use(express.static(path.join(__dirname, "dist")));
 
 app.get("/api", (req, res) => {
@@ -45,7 +47,7 @@ const isLoggedIn = (req, res, next) => {
   }
 };
       
-app.use("/api/customer", userRouter);
+app.use("/api/customer", customerRouter);
 app.use("/api/calender", calendarRouter);
 app.use("/api/booking", appointmentRouter);
 app.use("/api/maps", locationRouter)
