@@ -5,7 +5,6 @@ const logger = require("morgan");
 require('dotenv').config();
 require('./config/database');
 const jwt = require("jsonwebtoken")
-const cors = require("cors")
 const customerRouter = require('./routes/userRouter');
 const calendarRouter = require('./routes/calendarRouter');
 const appointmentRouter = require('./routes/appointmentRouter');
@@ -15,7 +14,6 @@ const app = express();
 
 app.use(logger("dev"));
 app.use(express.json());
-app.use(cors())
 app.use(express.static(path.join(__dirname, "dist")));
 
 app.get("/api", (req, res) => {

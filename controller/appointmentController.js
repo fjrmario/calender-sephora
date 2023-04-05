@@ -6,7 +6,6 @@ const moment = require("moment");
 // const MakeupArtist = require("../model/makeupArtistModel")
 
 const create = async (req, res) => {
-  console.log(req.customer, 'request customer over here')
   try {
     const createAppointment = await Appointment.create(req.body);
     console.log(req.body);
@@ -64,6 +63,7 @@ const findAppointmentByCustomerName = async (req, res) => {
 
 const deleteAppointment = async (req, res) => {
   const { id } = req.params;
+  console.log(id)
   try {
     const findAppt = await Appointment.findOne({ _id: id });
     if (!findAppt) {
