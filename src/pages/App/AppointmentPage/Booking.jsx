@@ -8,13 +8,21 @@ const Booking = ({ setSelectedArtist, setCustomerInfo, customerInfo, fetchedLoca
 
   useEffect(() => {
     if (selectLocation) {
-      fetch(`/api/calender/${selectLocation}`)
+      const token = localStorage.getItem("token");
+  
+      fetch(`/api/calender/${selectLocation}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+      })
         .then((response) => response.json())
         .then((data) => setSelectArtist(data))
         .catch((error) =>
           console.error("Error fetching makeup artists:", error)
         );
-    } 
+    }
   }, [selectLocation]);
 
 

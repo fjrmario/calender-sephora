@@ -32,10 +32,13 @@ function Times({ date, selectArtist, customerInfo }) {
 
   const makeAppt = async (apptTiming) => {
     try {
+      const token = localStorage.getItem("token");
+  
       const response = await fetch(`/api/booking`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify(apptTiming),
       });
@@ -83,9 +86,15 @@ function Times({ date, selectArtist, customerInfo }) {
 
   useEffect(() => {
     if (selectArtist && date) {
-      fetch(
-        `/api/booking/${selectArtist._id}/${moment(date).format("YYYY-MM-DD")}`
-      )
+      const token = localStorage.getItem("token");
+  
+      fetch(`/api/booking/${selectArtist._id}/${moment(date).format("YYYY-MM-DD")}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+      })
         .then((response) => response.json())
         .then((data) => setApptTiming(data))
         .then((data) => {

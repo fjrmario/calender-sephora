@@ -47,7 +47,7 @@ const login = async (req, res) => {
     if (match) {
       const payload = { customer };
       console.log(`payload: ${payload}`);
-      const token = jwt.sign(payload, JWT_SECRET, { expiresIn: 600 });
+      const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "24Hrs" });
       res.status(200).json({ token, customer });
     } else {
       res.status(401).json({ message: "wrong password" });

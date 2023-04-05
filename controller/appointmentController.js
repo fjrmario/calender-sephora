@@ -6,6 +6,7 @@ const moment = require("moment");
 // const MakeupArtist = require("../model/makeupArtistModel")
 
 const create = async (req, res) => {
+  console.log(req.customer, 'request customer over here')
   try {
     const createAppointment = await Appointment.create(req.body);
     console.log(req.body);

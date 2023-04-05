@@ -35,17 +35,17 @@ app.get("/api", (req, res) => {
 // });
 
 
-const isLoggedIn = (req, res, next) => {
-  const authorization = req.headers.authorization;
-  const token = authorization.split(" ")[1];
-  const decode = jwt.verify(token, process.env.JWT_SECRET);
-  if (decode) {
-    res.locals.user = decode.user;
-    next();
-  } else {
-    res.status(403).json({ message: "sorry" });
-  }
-};
+// const isLoggedIn = (req, res, next) => {
+//   const authorization = req.headers.authorization;
+//   const token = authorization.split(" ")[1];
+//   const decode = jwt.verify(token, process.env.JWT_SECRET);
+//   if (decode) {
+//     res.locals.user = decode.user;
+//     next();
+//   } else {
+//     res.status(403).json({ message: "sorry" });
+//   }
+// };
       
 app.use("/api/customer", customerRouter);
 app.use("/api/calender", calendarRouter);

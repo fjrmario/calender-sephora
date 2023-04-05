@@ -9,7 +9,14 @@ const UpcomingAppointment = () => {
   const customerName = Name.customer.name
   
   useEffect(() => {
-    fetch(`/api/booking/${encodeURIComponent(customerName)}`)
+    const token = localStorage.getItem("token");
+    fetch(`/api/booking/${encodeURIComponent(customerName)}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => setAppt(data));
   }, [customerName]);
