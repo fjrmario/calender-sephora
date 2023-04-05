@@ -14,7 +14,7 @@ import { getUser } from "../../utilities/users-service";
 
 const App = () => {
 
-  const [user, setUser] = useState(getUser());
+  const [user, setUser] = useState(null);
 
   if (user === null) {
     // return (
