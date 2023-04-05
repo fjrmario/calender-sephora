@@ -14,13 +14,20 @@ import { getUser } from "../../utilities/users-service";
 
 const App = () => {
 
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState(getUser());
 
   if (user === null) {
+    // return (
+    //   <main className="App">
+    //     {/* <NavBar /> */}
+    //     <Routes>
+    //         <Route path="/*" element={<AuthPage/>}/>
+    //     </Routes>
+    //   </main>
+    // );
     return (
       <main className="App">
-        {/* <NavBar /> */}
-        <AuthPage setUser={setUser} user={user}/>
+        <AuthPage setUser={setUser}/>
       </main>
     );
   } else{

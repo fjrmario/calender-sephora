@@ -4,7 +4,7 @@ import LoginForm from "./LoginForm";
 import NavBar from "../../../components/NavBar";
 
 
-export default function AuthPage({ setUser, user }) {
+export default function AuthPage({ setUser }) {
 
   return (
     <>
@@ -16,7 +16,7 @@ export default function AuthPage({ setUser, user }) {
     </Link>
       <Routes>
         <Route path="/login" element={<LoginForm setUser={setUser} />}/>
-        <Route path="/signup" element={<SignUpForm setUser={setUser} />}/>
+        <Route path="/signup" element={<SignUpForm/>}/>
       </Routes>
     </>
   );

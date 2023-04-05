@@ -1,31 +1,49 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { getUser } from "../../../utilities/users-service";
+import { useNavigate } from "react-router-dom";
+// import jwt_decode from "jwt-decode";
 
-export default function LoginForm() {
+export default function LoginForm({ setUser }) {
+  const navigate = useNavigate();
   const [error, setError] = useState("");
-  const navigate = useNavigate()
+  const [loginTry, setLoginTry] = useState({
+    email: "",
+    password: "",
+  });
 
   const handleLogin = async (event) => {
     event.preventDefault();
 
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
-    console.log(data);
     try {
       const response = await fetch("/api/customer/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(loginTry),
       });
+      const data = await response.json();
       if (!response.ok) {
         throw new Error("Network response was not OK");
       }
-      navigate("/booking")
+      localStorage.setItem("token",  JSON.stringify(data.token));
+      const decoded = getUser()
+      const Name =  JSON.parse(window.atob(data.token.split(".")[1]))
+      console.log(Name.customer.name)
+      console.log(Name.customer.email)
+      setUser(decoded);
+      navigate("/booking");
+      console.log(decoded)
     } catch (error) {
       setError(error.message);
     }
+  };
+
+  const handleChange = (e) => {
+    setLoginTry({
+      ...loginTry,
+      [e.target.name]: e.target.value,
+    });
   };
 
   return (
@@ -34,17 +52,20 @@ export default function LoginForm() {
         <fieldset>
           <legend>Login</legend>
           <label>
-            Email: <input name="email" />
+            Email:
+            <input name="email" value={loginTry.name} onChange={handleChange} />
           </label>
           <label>
-            Password: <input name="password" />
+            Password:{" "}
+            <input
+              name="password"
+              value={loginTry.password}
+              onChange={handleChange}
+            />
           </label>
           <button>Login</button>
         </fieldset>
       </form>
-        <Link to="/signup">
-        <button>New User</button>
-      </Link>
     </>
   );
 }
