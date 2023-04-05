@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import DeleteAppointment from "./DeleteAppointments";
 
 
-const UpcomingAppointment = ({ customerName }) => {
+const UpcomingAppointment = () => {
   const [appt, setAppt] = useState([]);
-  customerName = "Firdaus Jr.Mario";
+  const token = localStorage.getItem("token")
+  const Name =  JSON.parse(window.atob(token.split(".")[1]))
+  const customerName = Name.customer.name
   
   useEffect(() => {
     fetch(`/api/booking/${encodeURIComponent(customerName)}`)
-    // fetch(`/api/booking/Firdaus Jr.Mario`)
-    // fetch(`/api/booking/${customerName}`)
       .then((response) => response.json())
       .then((data) => setAppt(data));
   }, [customerName]);
