@@ -14,7 +14,7 @@ import { getUser } from "../../utilities/users-service";
 
 const App = () => {
 
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(getUser());
 
   if (user === null) {
     // return (
@@ -27,7 +27,14 @@ const App = () => {
     // );
     return (
       <main className="App">
+        <NavBar />
         <AuthPage setUser={setUser}/>
+        <Routes>
+          <Route path="/maps" element={<Map/>} />
+        <Route path="/orders/new" element={<NewOrderPage />} />
+        <Route path="/orders" element={<OrderHistoryPage/>} />
+        </Routes>
+
       </main>
     );
   } else{
@@ -35,9 +42,9 @@ const App = () => {
       <main className="App">
         <NavBar user={user} setUser={setUser} />
         <Routes>
+        <Route path="/maps" element={<Map/>} />
         <Route path="/orders/new" element={<NewOrderPage />} />
         <Route path="/orders" element={<OrderHistoryPage/>} />
-        <Route path="/maps" element={<Map/>} />
         <Route path="/booking" element={<AppointmentPage/>} />
         <Route path="/history" element={<UpcomingAppointment/>} />
         <Route path="/signup" element={<SignUpForm/>} />
