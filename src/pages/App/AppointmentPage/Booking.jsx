@@ -53,8 +53,6 @@ const Booking = ({ setSelectedArtist, setCustomerInfo, customerInfo, fetchedLoca
         selectLocation={selectLocation}
         handleChange={handleChange}
         customerInfo={customerInfo}
-        setCustomerInfo={setCustomerInfo}
-        // handleSubmit={handleSubmit}
         fetchedLocations={fetchedLocations}
       />
     </div>

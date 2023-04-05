@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 const DeleteAppointment = ({ id, delAppt }) => {
   const token = localStorage.getItem("token");
 

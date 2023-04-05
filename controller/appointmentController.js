@@ -1,6 +1,4 @@
 const Appointment = require("../model/appointmentModel");
-const Location = require("../model/locationModel")
-const MakeupArtist = require("../model/makeupArtistModel")
 const moment = require("moment");
 
 // const MakeupArtist = require("../model/makeupArtistModel")

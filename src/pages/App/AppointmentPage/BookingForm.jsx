@@ -1,10 +1,4 @@
-// import { getUser } from "../../../utilities/users-service";
-import { getUser } from "../../../utilities/users-api";
-
-
-
-
-const BookingForm = ({ selectArtist, selectLocation, handleChange, fetchedLocations, customerInfo, setCustomerInfo }) => {
+const BookingForm = ({ selectArtist, selectLocation, handleChange, fetchedLocations, customerInfo}) => {
   const token = localStorage.getItem("token")
   const Name =  JSON.parse(window.atob(token.split(".")[1]))
   const customerName = Name.customer.name

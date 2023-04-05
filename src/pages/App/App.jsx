@@ -8,7 +8,6 @@ import Map from "./Map/Map";
 import AppointmentPage from "./AppointmentPage/AppointmentPage";
 import SignUpForm from "./AuthPage/SignUpForm";
 import UpcomingAppointment from "../UpcomingAppointment/UpcomingAppointment";
-// import { getUser } from "../../utilities/users-api";
 import { getUser } from "../../utilities/users-service";
 
 
