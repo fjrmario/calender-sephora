@@ -11,6 +11,7 @@ import UpcomingAppointment from "../UpcomingAppointment/UpcomingAppointment";
 import { getUser } from "../../utilities/users-service";
 import Admin from "./Admin/Admin"
 import MakeupArtist from "./Admin/MakeupArtist"
+import Edit from "./Admin/Edit";
 
 
 const App = () => {
@@ -54,6 +55,8 @@ const App = () => {
         <Route path="/signup" element={<SignUpForm/>} />
         <Route path="/admin" element={<Admin/>}/>
         <Route path="/makeupartist/:id" element={<MakeupArtist/>}/>
+        <Route path={`/edit/:id`} element={<Edit />} />
+        
 
 
         </Routes>

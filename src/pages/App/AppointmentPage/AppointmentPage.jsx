@@ -7,7 +7,7 @@ import Cal from "./Calendar";
 import DateSelect from "./DateSelect";
 
 const AppointmentPage = () => {
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(null);
   const [showTime, setShowTime] = useState(false);
   const [selectArtist, setSelectedArtist] = useState("");
   const [customerInfo, setCustomerInfo] = useState({ name: "", email: "" });
@@ -64,7 +64,6 @@ const AppointmentPage = () => {
           customerInfo={customerInfo}
         />
       </div>
-      <DateSelect date={date} />
     </div>
   );
 };

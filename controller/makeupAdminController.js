@@ -62,6 +62,7 @@ const updateMakeupArtist = async (req, res) => {
 };
 
 const findAppointmentByMakeupArtistId = async (req, res) => {
+  console.log('hi')
     try {
       const { makeupArtistId } = req.params;
       const currentDate = moment().startOf("day").format("DD/MM/YYYY")

@@ -160,8 +160,12 @@ function Times({ date, selectArtist, customerInfo }) {
     // console.log(`breakTimeSlotEndTimeInMins: ${breakTimeSlotEndTimeInMins}`);
 
     return (
-      breakStartTimeInMins >= breakTimeSlotStartTimeInMins &&
-      breakEndTimeInMins <= breakTimeSlotEndTimeInMins
+      (breakTimeSlotStartTimeInMins >= breakStartTimeInMins &&
+        breakTimeSlotStartTimeInMins < breakEndTimeInMins) ||
+      (breakTimeSlotEndTimeInMins > breakStartTimeInMins &&
+        breakTimeSlotEndTimeInMins <= breakEndTimeInMins) ||
+      (breakTimeSlotStartTimeInMins <= breakStartTimeInMins &&
+        breakTimeSlotEndTimeInMins >= breakEndTimeInMins)
     );
   };
 
