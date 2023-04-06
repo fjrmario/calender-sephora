@@ -10,6 +10,7 @@ import SignUpForm from "./AuthPage/SignUpForm";
 import UpcomingAppointment from "../UpcomingAppointment/UpcomingAppointment";
 // import { getUser } from "../../utilities/users-api";
 import { getUser } from "../../utilities/users-service";
+import Admin from "./Admin/Admin"
 
 
 const App = () => {
@@ -33,6 +34,7 @@ const App = () => {
           <Route path="/maps" element={<Map/>} />
         <Route path="/orders/new" element={<NewOrderPage />} />
         <Route path="/orders" element={<OrderHistoryPage/>} />
+        <Route path="/admin" element={<Admin/>}/>
         </Routes>
 
       </main>
@@ -48,6 +50,8 @@ const App = () => {
         <Route path="/booking" element={<AppointmentPage/>} />
         <Route path="/history" element={<UpcomingAppointment/>} />
         <Route path="/signup" element={<SignUpForm/>} />
+        <Route path="/admin" element={<Admin/>}/>
+
         </Routes>
         
       </main>

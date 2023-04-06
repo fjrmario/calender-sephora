@@ -1,12 +1,21 @@
 const Appointment = require("../model/appointmentModel");
-const Location = require("../model/locationModel")
-const MakeupArtist = require("../model/makeupArtistModel")
 const moment = require("moment");
 
-// const MakeupArtist = require("../model/makeupArtistModel")
+const createAppointmentWithLimit = async (req, res) => {
+  const { customerName } = req.params;
+  const formattedDate = moment(req.params.date).format("DD/MM/YYYY");
 
-const create = async (req, res) => {
   try {
+    const countAppointment = await Appointment.countDocuments({
+      "customerInfo.name": customerName,
+      date: formattedDate,
+    });
+
+    if (countAppointment >= 2) {
+      return res.status(400).json({
+        message: `You have already made ${countAppointment} appointments for this ${formattedDate}.`,
+      });
+    }
     const createAppointment = await Appointment.create(req.body);
     console.log(req.body);
     const newAppointment = await createAppointment.save();
@@ -38,24 +47,24 @@ const findAppointmentByDate = async (req, res) => {
 const findAppointmentByCustomerName = async (req, res) => {
   try {
     const { customerName } = req.params;
-    const currentDate = moment().startOf("day").format("DD/MM/YYYY")
+    const currentDate = moment().startOf("day").format("DD/MM/YYYY");
     const currentTime = moment().format("HH:mm");
-    
-    console.log('customerName:', customerName);
-    console.log('currentTime:', currentTime);
-    // console.log('currentTime:', currentTime.toDate());
 
+    console.log("customerName:", customerName);
+    console.log("currentTime:", currentTime);
+    // console.log('currentTime:', currentTime.toDate());
 
     const getAppointments = await Appointment.find({
       "customerInfo.name": customerName,
       date: {
         // $gte: "14/04/20203",
         $gte: currentDate,
-
-      }})
+      },
+    })
       .sort({ date: 1 })
-      .populate('location.id makeupArtist.id').sort({ date: 1, timeslot: 1 });
-      res.status(200).json(getAppointments);
+      .populate("location.id makeupArtist.id")
+      .sort({ date: 1, timeslot: 1 });
+    res.status(200).json(getAppointments);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -63,7 +72,7 @@ const findAppointmentByCustomerName = async (req, res) => {
 
 const deleteAppointment = async (req, res) => {
   const { id } = req.params;
-  console.log(id)
+  console.log(id);
   try {
     const findAppt = await Appointment.findOne({ _id: id });
     if (!findAppt) {
@@ -77,8 +86,9 @@ const deleteAppointment = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
 module.exports = {
-  create,
+  createAppointmentWithLimit,
   deleteAppointment,
   findAppointmentByDate,
   findAppointmentByCustomerName,

@@ -1,6 +1,11 @@
 const DateSelect = ({ date }) => {
 
-    return null
+    return (
+        <p>
+            <span>Default selected date:</span>{date.toLocaleString()}
+        </p> 
+    )
 }
+    
 
 export default DateSelect;

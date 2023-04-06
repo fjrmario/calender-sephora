@@ -29,12 +29,15 @@ function Times({ date, selectArtist, customerInfo }) {
   const [info, setInfo] = useState(false);
   const [dateChanged, setDateChanged] = useState(false);
   const [apptTiming, setApptTiming] = useState([]);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const makeAppt = async (apptTiming) => {
     try {
       const token = localStorage.getItem("token");
+      const formattedDate = moment(date).format("YYYY-MM-DD");
+      console.log(`formattedDate: ${formattedDate}`);
   
-      const response = await fetch(`/api/booking`, {
+      const response = await fetch(`/api/booking/${customerInfo.name}/${formattedDate}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,20 +45,26 @@ function Times({ date, selectArtist, customerInfo }) {
         },
         body: JSON.stringify(apptTiming),
       });
-      if (!response.ok) {
-        throw new Error("Error creating appointments");
-      }
+
+      const data = await response.json();
+      return { status: response.status, message: data.message };
     } catch (error) {
       console.error("Error creating appointment:", error);
+      return { status: 400, message: error.message };
     }
   };
   console.log("selectArtist:", JSON.stringify(selectArtist));
+
+  const clearErrorMessage = () => {
+    setErrorMessage(null);
+  }
 
   const displayInfo = async (e) => {
     const clickedTimeslot = e.target.innerText;
     setInfo(true);
     setEvent(clickedTimeslot);
     setDateChanged(false);
+    setErrorMessage(null);
 
     const newAppointment = await makeAppt({
       date: date.toLocaleDateString("en-UK"),
@@ -72,16 +81,22 @@ function Times({ date, selectArtist, customerInfo }) {
       },
     });
 
-    setApptTiming((apptTiming) => [...apptTiming, { timeslot: clickedTimeslot }]);
+    if (newAppointment.status === 200) {
+      setApptTiming((apptTiming) => [...apptTiming, { timeslot: clickedTimeslot }]);
+    } else {
+      setErrorMessage(newAppointment.message); // Display the error message
+    }
   };
 
   const todayDate = new Date();
+
   const futureDate = date > todayDate;
   console.log(`date in Times: ${date}`);
 
   useEffect(() => {
     setDateChanged(true);
     setInfo(false);
+    clearErrorMessage();
   }, [date]);
 
   useEffect(() => {
@@ -166,13 +181,13 @@ function Times({ date, selectArtist, customerInfo }) {
     const isTimeSlotBooked = apptTiming.some(
       (appt) => appt.timeslot === `${startTime} - ${endTime}`
     );
-    const isClickedTimeSlot = event === `${startTime} - ${endTime}`;
+    
     return (
       isPastTimeSlot ||
       !isMakeUpArtistWithinWorkingHours ||
       isMakeUpArtistWithinBreakHours ||
-      isTimeSlotBooked ||
-      isClickedTimeSlot
+      isTimeSlotBooked 
+     
     );
   };
 
@@ -182,6 +197,16 @@ function Times({ date, selectArtist, customerInfo }) {
       const endTime = times.split(" - ")[1];
       return timeSlotDisabled(startTime, futureDate, endTime, selectArtist);
     });
+  };
+
+  const renderBookingMessage = () => {
+    if (errorMessage) {
+      return errorMessage
+    } else if(!dateChanged && info && !errorMessage){
+      return `Makeup session booked on ${date.toLocaleDateString(
+        "en-UK"
+      )} for timeslot ${event}.`;
+    }
   };
 
   return (
@@ -204,11 +229,7 @@ function Times({ date, selectArtist, customerInfo }) {
       })}
       {isAllTimeSlotRemoved() && <div>No timeslot available for today</div>}
       <div>
-        {!dateChanged && info
-          ? `Makeup session booked on ${date.toLocaleDateString(
-              "en-UK"
-            )} for timeslot ${event}.`
-          : null}
+        {renderBookingMessage()}
       </div>
     </div>
   );
