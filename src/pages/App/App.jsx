@@ -10,6 +10,7 @@ import SignUpForm from "./AuthPage/SignUpForm";
 import UpcomingAppointment from "../UpcomingAppointment/UpcomingAppointment";
 import { getUser } from "../../utilities/users-service";
 import Admin from "./Admin/Admin"
+import MakeupArtist from "./Admin/MakeupArtist"
 
 
 const App = () => {
@@ -34,6 +35,8 @@ const App = () => {
         <Route path="/orders/new" element={<NewOrderPage />} />
         <Route path="/orders" element={<OrderHistoryPage/>} />
         <Route path="/admin" element={<Admin/>}/>
+        <Route path="/makeupartist/:id" element={<MakeupArtist/>}/>
+
         </Routes>
 
       </main>
@@ -50,6 +53,8 @@ const App = () => {
         <Route path="/history" element={<UpcomingAppointment/>} />
         <Route path="/signup" element={<SignUpForm/>} />
         <Route path="/admin" element={<Admin/>}/>
+        <Route path="/makeupartist/:id" element={<MakeupArtist/>}/>
+
 
         </Routes>
         

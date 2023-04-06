@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Routes, Route } from "react-router-dom";
+import MakeupArtist from "./MakeupArtist";
 
 export default function Admin() {
   const [makeupArtists, setMakeupArtists] = useState([]);
   const [locations, setLocations] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState("");
+  const [selectedMakeUpLocation, setSelectedMakeUpLocation] = useState("");
   const [token, setToken] = useState("");
 
   useEffect(() => {
@@ -20,44 +21,57 @@ export default function Admin() {
 
   useEffect(() => {
     async function fetchMakeupArtists() {
-      const response = await axios.get(`/api/makeupartist/${selectedLocation}`);
-      const {data} = response
-      setMakeupArtists(data);
+      try {
+        if(selectedMakeUpLocation !== ""){
+        const response = await axios.get(`/api/makeupartist/${selectedMakeUpLocation}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setMakeupArtists(response.data);
+        } 
+      } catch (error) {
+        console.error("Error fetching makeup artists:", error);
+      }
     }
     fetchMakeupArtists();
-  }, [selectedLocation]);
+  }, [selectedMakeUpLocation, token]);
 
   const handleLocationChange = (event) => {
-    setSelectedLocation(event.target.value);
+    setSelectedMakeUpLocation(event.target.value);
   };
 
-  console.log(makeupArtists)
-
   return (
-    <div>
-      <h2>Select a location:</h2>
-      <select value={selectedLocation} onChange={handleLocationChange}>
-        <option value="">--Select a location--</option>
-        {locations.map((location) => (
-          <option key={location._id} value={location._id}>
-            {location.name}
-          </option>
-        ))}
-      </select>
-      {/* {makeupArtists.length > 0 ? (
-          <div>
-            <h2>Makeup Artists</h2>
-            <ul>
-              {makeupArtists.map((makeupArtist) => (
-                <li key={makeupArtist._id}>
-                  <Link to={`/makeupArtist/${makeupArtist._id}`}>
-                    {makeupArtist.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ): null } */}
-    </div>
+    <>
+      <div>
+        <h2>Select a location:</h2>
+        <select value={selectedMakeUpLocation} onChange={handleLocationChange}>
+          <option value="">--Select a location--</option>
+          {locations.map((location) => (
+            <option key={location._id} value={location._id}>
+              {location.name}
+            </option>
+          ))}
+        </select>
+        {makeupArtists && makeupArtists.length > 0 ? (
+      <div>
+        <h2>Makeup Artists</h2>
+        <ul>
+          {makeupArtists.map((makeupArtist) => (
+            <li key={makeupArtist._id}>
+            <Link to={`/makeupartist/${makeupArtist._id}`}>
+                {makeupArtist.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>):(<p> No makeup artist at this location</p>)}
+    </div>    
+    <Routes>
+      {makeupArtists.map((makeupArtist) => (
+      <Route key={makeupArtist._id} path={`/makeupartist/${makeupArtist._id}`} element={<MakeupArtist id={makeupArtist._id} />} />
+      ))}
+    </Routes>
+  </>
   );
 }
