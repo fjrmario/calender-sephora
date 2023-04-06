@@ -3,7 +3,7 @@ const router = express.Router();
 
 const makeupArtist = require("../controller/makeupAdminController");
 
-
+router.get("/edit/:id", makeupArtist.show)
 router.post("/", makeupArtist.create);
 router.get("/:locationId", makeupArtist.findMakeupArtistByLocation);
 router.get("/admin/:makeupArtistId", makeupArtist.findAppointmentByMakeupArtistId);

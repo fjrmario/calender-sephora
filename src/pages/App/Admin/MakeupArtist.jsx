@@ -38,8 +38,8 @@ export default function MakeupArtist() {
             ))}
           </ul>
         <Routes>
-            <Route path={`/edit/${id}`} element={<Edit id={id} />} />
+            <Route path={`/makeupartist/edit/${id}`} element={<Edit />} />
         </Routes>
         </>
-      );
-    }
+    );
+}

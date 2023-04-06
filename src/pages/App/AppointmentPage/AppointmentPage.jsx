@@ -4,7 +4,6 @@ import "../App.css";
 import Times from "./Times";
 import Booking from "./Booking";
 import Cal from "./Calendar";
-import DateSelect from "./DateSelect";
 
 const AppointmentPage = () => {
   const [date, setDate] = useState(null);

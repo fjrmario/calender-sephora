@@ -35,8 +35,8 @@ const App = () => {
           <Route path="/maps" element={<Map/>} />
         <Route path="/orders/new" element={<NewOrderPage />} />
         <Route path="/orders" element={<OrderHistoryPage/>} />
-        <Route path="/admin" element={<Admin/>}/>
-        <Route path="/makeupartist/:id" element={<MakeupArtist/>}/>
+        <Route path="/admin/*" element={<Admin/>}/>
+        <Route path="/makeupartist/:id/*" element={<MakeupArtist/>}/>
 
         </Routes>
 
@@ -53,9 +53,9 @@ const App = () => {
         <Route path="/booking" element={<AppointmentPage/>} />
         <Route path="/history" element={<UpcomingAppointment/>} />
         <Route path="/signup" element={<SignUpForm/>} />
-        <Route path="/admin" element={<Admin/>}/>
-        <Route path="/makeupartist/:id" element={<MakeupArtist/>}/>
-        <Route path={`/edit/:id`} element={<Edit />} />
+        <Route path="/admin/*" element={<Admin/>}/>
+        <Route path="/makeupartist/:id/*" element={<MakeupArtist/>}/>
+        <Route path={`/makeupartist/edit/:id`} element={<Edit  />} />
         
 
 

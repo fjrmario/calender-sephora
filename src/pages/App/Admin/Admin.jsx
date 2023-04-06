@@ -70,7 +70,7 @@ export default function Admin() {
     <Routes>
       {makeupArtists.map((makeupArtist) => (
       <Route key={makeupArtist._id} path={`/makeupartist/${makeupArtist._id}`} element={<MakeupArtist id={makeupArtist._id} />} />
-      ))}
+        ))}
     </Routes>
   </>
   );

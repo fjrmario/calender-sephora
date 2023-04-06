@@ -62,12 +62,9 @@ const updateMakeupArtist = async (req, res) => {
 };
 
 const findAppointmentByMakeupArtistId = async (req, res) => {
-  console.log('hi')
     try {
       const { makeupArtistId } = req.params;
       const currentDate = moment().startOf("day").format("DD/MM/YYYY")
-      console.log('makeupArtistId:', makeupArtistId);
-      console.log('currentDate:', currentDate);
   
       const getAppointments = await Appointment.find({
         "makeupArtist.id": makeupArtistId,
@@ -84,11 +81,22 @@ const findAppointmentByMakeupArtistId = async (req, res) => {
       res.status(400).json({ error: error.message });
     }
 };
+const show = async (req, res) => {
+  const { id }  = req.params
+
+  try {
+    const mkaeupArtist = await MakeupArtist.find({ _id: id }).populate('location.id');
+      res.status(200).json(mkaeupArtist);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 module.exports ={
     create,
     deleteMakeupArtist,
     findMakeupArtistByLocation,
     updateMakeupArtist,
-    findAppointmentByMakeupArtistId
+    findAppointmentByMakeupArtistId,
+    show
 }

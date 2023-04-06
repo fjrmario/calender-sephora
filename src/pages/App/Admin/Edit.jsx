@@ -1,78 +1,86 @@
 import { useParams } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useState, useEffect } from "react"
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
 
 export default function Edit() {
-    const [makeupArtist, setMakeupArtist] = useState([])
-    const [formValues, setFormValues] = useState({})
-    const {id}= useParams(0)
+    const {id} = useParams()
+    const [makeupArtists, setMakeupArtists]= useState('')
+
+    useEffect(() => {
+        console.log(makeupArtists);
+    }, [makeupArtists]);
 
     useEffect(()=>{
         async function fetchMakeupArtists(){
-        try{
-            const response = await fetch(`/api/makeupartist/admin/${id}`);
-            if(!response.ok){
-                throw new Error("Failed to fetch appointments");
-            }
-            const data = await response.json();
-            setMakeupArtist(data[0].makeupArtist);
-            setFormValues(data[0].makeupArtist)
-        } catch (error){
-            console.error("Error fetching appointments:" , error)
+            try{
+                const response = await fetch(`/api/makeupartist/edit/${id}`);
+                if(!response.ok){
+                    throw new Error("Failed to fetch appointments");
+                }
+                const data = await response.json();
+                setMakeupArtists(data);
+            } catch (error){
+                console.error("Error fetching appointments:" , error)
         }}
-        console.log(makeupArtist[0].makeupArtist.id)
         fetchMakeupArtists()
     },[id])
 
-    const handleChange = (event) => {
+    const handleInputChange = (event) => {
+        if (event && event.target) {
         const { name, value } = event.target;
-        setFormValues({
-          ...formValues,
-          [name]: value,
-        });
-    };
 
-    const handleSubmit = (event) => {
+        setMakeupArtists(prevState => ({
+          ...prevState,
+          [name]: value
+        }));
+    }};
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        // submit form data to API endpoint for updating the makeup artist
+        try {
+          const response = await fetch(`/api/makeupartist/${id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(makeupArtists)
+          });
+          if (!response.ok) {
+            throw new Error("Failed to update makeup artist");
+          }
+          console.log('Makeup artist updated successfully!');
+        } catch (error) {
+          console.error("Error updating makeup artist:", error)
+        }
     };
 
-    return (
+
+   return (
+    <>
+    {makeupArtists &&
         <div>
-          <h1>Edit Makeup Artist</h1>
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="name">Name:</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formValues.name || ""}
-              onChange={handleChange}
-            />
-            <label htmlFor="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formValues.email || ""}
-              onChange={handleChange}
-            />
-            <label htmlFor="phone">Phone:</label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              value={formValues.phone || ""}
-              onChange={handleChange}
-            />
-            <label htmlFor="description">Description:</label>
-            <textarea
-              id="description"
-              name="description"
-              value={formValues.description || ""}
-              onChange={handleChange}
-            ></textarea>
-            <button type="submit">Save Changes</button>
-          </form>
+            <form onSubmit={handleSubmit}>
+                    <label htmlFor="name">Name:</label>
+                    <input type="text" name="name" onChange={handleInputChange}/>
+                    <label htmlFor="workingSchedule.startDate">Start Date: </label>
+                    <input type="text" name="workingSchedule.startDate" onChange={handleInputChange} placeholder="YYYY-MM-DD" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />
+                    <label htmlFor="workingSchedule.endDate">End Date:</label>
+                    <input type="text" name="workingSchedule.endDate" placeholder="YYYY-MM-DD" onChange={handleInputChange} pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />
+                    <label htmlFor="workingHours.startTime">Start Time:</label>
+                    <input type="text" name="workingHours.startTime" onChange={handleInputChange} placeholder="HH:MM" pattern="^([01]\d|2[0-3]):([0-5]\d)$" />
+                    <label htmlFor="workingHours.endTime">End Time:</label>
+                    <input type="text" name="workingHours.endTime" placeholder="HH:MM" onChange={handleInputChange}  pattern="^([01]\d|2[0-3]):([0-5]\d)$" />
+                    <label htmlFor="breakTime.startTime">Break Start Time:</label>
+                    <input type="text" name="breakTime.startTime" placeholder="HH:MM" onChange={handleInputChange}   pattern="^([01]\d|2[0-3]):([0-5]\d)$"/>
+                    <label htmlFor="breakTime.endTime">Break End Time:</label>
+                    <input type="text" name="breakTime.endTime" placeholder="HH:MM" onChange={handleInputChange}  pattern="^([01]\d|2[0-3]):([0-5]\d)$"/> 
+                    <label htmlFor="location.id.name">Location Name:</label>
+                    <input type="text" name="location.id.name" onChange={handleInputChange} />
+                    <button type="submit">Submit</button>
+            </form>
         </div>
-      )
     }
+    </>
+    )
+}
