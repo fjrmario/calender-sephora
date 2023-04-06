@@ -21,6 +21,8 @@ export default function MakeupArtist() {
         fetchAppointments()
     },[id])
 
+    
+
     console.log(appointments)
 
     return (
