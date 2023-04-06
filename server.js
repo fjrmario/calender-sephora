@@ -1,6 +1,5 @@
 const express = require("express");
 const path = require("path");
-// const favicon = require("serve-favicon");
 const logger = require("morgan");
 require('dotenv').config();
 require('./config/database');
@@ -20,32 +19,7 @@ app.use(express.static(path.join(__dirname, "dist")));
 app.get("/api", (req, res) => {
   res.send("Hello World!");
 });
-
-// app.get("/api/secret",  (req, res) => {
-// // app.get("/api/secret", isLoggedIn, (req, res) => {
-//   const authorization = req.headers.authorization;
-//   const token = authorization.split(" ")[1];
-//   const decode = jwt.verify(token, process.env.JWT_SECRET);
-//   if (decode) {
-//     res.json({ message : "secret"})
-//   } else {
-//     res.status(403).json({ message: "sorry"})
-//   }
-// });
-
-
-// const isLoggedIn = (req, res, next) => {
-//   const authorization = req.headers.authorization;
-//   const token = authorization.split(" ")[1];
-//   const decode = jwt.verify(token, process.env.JWT_SECRET);
-//   if (decode) {
-//     res.locals.user = decode.user;
-//     next();
-//   } else {
-//     res.status(403).json({ message: "sorry" });
-//   }
-// };
-      
+     
 app.use("/api/customer", customerRouter);
 app.use("/api/calender", calendarRouter);
 app.use("/api/booking", appointmentRouter);

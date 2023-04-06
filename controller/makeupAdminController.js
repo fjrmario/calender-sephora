@@ -1,5 +1,4 @@
 const Appointment = require("../model/appointmentModel");
-const Location = require("../model/locationModel")
 const MakeupArtist = require("../model/makeupArtistModel")
 const moment = require("moment");
 
@@ -84,25 +83,6 @@ const findAppointmentByMakeupArtistId = async (req, res) => {
       res.status(400).json({ error: error.message });
     }
 };
-
-// const showAppointmentByDate = async (req, res) => {
-//     console.log("makeupArtistId")
-//     const makeupArtistId = req.params.id;
-//     console.log(`makeupId: ${makeupArtistId}`);
-//     try {
-//       const apptDate = moment(req.params.date).format("DD/MM/YYYY");
-//       console.log("Received date in server:", req.params.date);
-//       console.log(`apptDate: ${apptDate}`);
-//       const findApptByMakeupArtist = await Appointment.find({
-//         "makeupArtist.id": makeupArtistId,
-//         date: apptDate,
-//       });
-//       console.log(findApptByMakeupArtist);
-//       res.status(200).json(findApptByMakeupArtist);
-//     } catch (error) {
-//       res.status(400).json({ error: error.message });
-//     }
-// };
 
 module.exports ={
     create,
