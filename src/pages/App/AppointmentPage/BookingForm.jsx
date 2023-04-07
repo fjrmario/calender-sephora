@@ -1,10 +1,12 @@
 const BookingForm = ({ selectArtist, selectLocation, handleChange, fetchedLocations, customerInfo}) => {
   const token = localStorage.getItem("token")
-  const Name =  JSON.parse(window.atob(token.split(".")[1]))
-  const customerName = Name.customer.name
-  const customerEmail = Name.customer.email
-  customerInfo.name = customerName
-  customerInfo.email = customerEmail
+  if(token){
+    const Name =  JSON.parse(window.atob(token.split(".")[1]))
+    const customerName = Name.customer.name
+    const customerEmail = Name.customer.email
+    customerInfo.name = customerName
+    customerInfo.email = customerEmail
+  }
 
   return (
     <>

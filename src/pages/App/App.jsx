@@ -10,6 +10,7 @@ import { getUser } from "../../utilities/users-service";
 import Admin from "./Admin/Admin"
 import MakeupArtist from "./Admin/MakeupArtist"
 import Edit from "./Admin/Edit";
+import NewArtist from "./Admin/NewArtist";
 
 
 const App = () => {
@@ -33,9 +34,8 @@ const App = () => {
           <Route path="/maps" element={<Map/>} />
         <Route path="/admin/*" element={<Admin/>}/>
         <Route path="/makeupartist/:id/*" element={<MakeupArtist/>}/>
-
+        <Route path="/booking" element={<AppointmentPage/>} />
         </Routes>
-
       </main>
     );
   } else{
@@ -50,7 +50,7 @@ const App = () => {
         <Route path="/admin/*" element={<Admin/>}/>
         <Route path="/makeupartist/:id/*" element={<MakeupArtist/>}/>
         <Route path={`/makeupartist/edit/:id`} element={<Edit  />} />
-        
+        <Route path="/newmakeupartist" element={<NewArtist />} />
 
 
         </Routes>

@@ -85,7 +85,7 @@ const show = async (req, res) => {
   const { id }  = req.params
 
   try {
-    const mkaeupArtist = await MakeupArtist.find({ _id: id }).populate('location.id');
+    const mkaeupArtist = await MakeupArtist.find({ _id: id }).populate('location');
       res.status(200).json(mkaeupArtist);
   } catch (error) {
     res.status(400).json({ error: error.message });
