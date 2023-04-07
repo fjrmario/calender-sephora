@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { getUser } from "../../../utilities/users-service";
 import { useNavigate } from "react-router-dom";
-// import jwt_decode from "jwt-decode";
 
 export default function LoginForm({ setUser }) {
   const navigate = useNavigate();
@@ -47,25 +46,28 @@ export default function LoginForm({ setUser }) {
   };
 
   return (
-    <>
-      <form onSubmit={handleLogin}>
-        <fieldset>
-          <legend>Login</legend>
-          <label>
-            Email:
-            <input name="email" value={loginTry.name} onChange={handleChange} />
-          </label>
-          <label>
-            Password:{" "}
-            <input
-              name="password"
-              value={loginTry.password}
-              onChange={handleChange}
-            />
-          </label>
-          <button>Login</button>
-        </fieldset>
-      </form>
-    </>
+    <div>
+      <div className="form-container">
+        <form onSubmit={handleLogin}>
+          <fieldset>
+            <legend>Login</legend>
+            <label>
+              Email:
+              <input name="email" value={loginTry.email} onChange={handleChange} />
+            </label>
+            <label>
+              Password:{" "}
+              <input
+                name="password"
+                value={loginTry.password}
+                onChange={handleChange}
+              />
+            </label>
+            <button>Login</button>
+          </fieldset>
+        </form>
+      </div>
+      {error ? <p>&nbsp;{error}</p> : null}
+    </div>
   );
 }

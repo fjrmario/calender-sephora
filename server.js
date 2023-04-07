@@ -4,7 +4,7 @@ const logger = require("morgan");
 require('dotenv').config();
 require('./config/database');
 const jwt = require("jsonwebtoken")
-const customerRouter = require('./routes/userRouter');
+const customerRouter = require('./routes/customerLoginRouter');
 const calendarRouter = require('./routes/calendarRouter');
 const appointmentRouter = require('./routes/appointmentRouter');
 const locationRouter = require('./routes/locationRouter')

@@ -9,29 +9,26 @@ export default function SignUpForm() {
     password: "",
     confirm: "",
   });
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
 
   const disable = state.password !== state.confirm;
 
   const newCustomer = async (userData) => {
-    try {
-      const response = await fetch(`/api/customer/signup`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
-
-      if (!response.ok) {
-        throw new Error("User registration failed");
-      }
-
-      const data = await response.json();
-      return data.token;
-    } catch (error) {
-      console.error(error.message);
+    const response = await fetch(`/api/customer/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+  
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || "User registration failed");
     }
+  
+    const data = await response.json();
+    return data;
   };
 
   const handleSubmit = async (event) => {
@@ -62,7 +59,8 @@ export default function SignUpForm() {
     <div>
       <div className="form-container">
         <form autoComplete="off" onSubmit={handleSubmit}>
-          {error}
+          <fieldset>
+            <legend>New Customer</legend>
           <label>Name</label>
           <input
             type="text"
@@ -71,6 +69,7 @@ export default function SignUpForm() {
             onChange={handleChange}
             required
           />
+          &nbsp;
           <label>Email</label>
           <input
             type="email"
@@ -79,6 +78,7 @@ export default function SignUpForm() {
             onChange={handleChange}
             required
           />
+          &nbsp;
           <label>Password</label>
           <input
             type="password"
@@ -87,6 +87,7 @@ export default function SignUpForm() {
             onChange={handleChange}
             required
           />
+          &nbsp;
           <label>Confirm</label>
           <input
             type="password"
@@ -95,12 +96,14 @@ export default function SignUpForm() {
             onChange={handleChange}
             required
           />
+          &nbsp;
           <button type="submit" disabled={disable}>
             SIGN UP
           </button>
+          </fieldset>
         </form>
       </div>
-      <p className="error-message">&nbsp;{state.error}</p>
+      {error ? <p>&nbsp;{error}</p> : null}
     </div>
   );
 }
