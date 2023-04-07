@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const makeupArtistSchema = new Schema({
-    name: { type: String, required: true },
+    name: { type: String, required: true, unique: true },
     
     workingSchedule: {
       startDate: { type: Date, required: true },
@@ -18,10 +18,8 @@ const makeupArtistSchema = new Schema({
     },
     
     location: {
-      id: { type: String, ref: 'Location', required: true },
+      id: { type: String, ref: 'Location', required: true},
     },
-
-    // timeslot: []
   });
   
   const MakeupArtist = mongoose.model('MakeupArtist', makeupArtistSchema);

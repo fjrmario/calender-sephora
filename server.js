@@ -7,8 +7,8 @@ const jwt = require("jsonwebtoken")
 const customerRouter = require('./routes/customerLoginRouter');
 const calendarRouter = require('./routes/calendarRouter');
 const appointmentRouter = require('./routes/appointmentRouter');
-const locationRouter = require('./routes/locationRouter')
 const makeupArtistRouter = require('./routes/makeupArtistRouter')
+const locationRouter = require('./routes/locationRouter')
 
 const app = express();
 

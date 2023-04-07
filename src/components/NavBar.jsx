@@ -1,8 +1,11 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { logout } from "../utilities/users-service"
 
-export default function NavBar({ user, setUser }) {
-//   const welcomeMessage = user === null ? "" : `Welcome ${user.name}`;
+export default function NavBar({ setUser }) {
+  const token = localStorage.getItem("token")
+  const Name =  JSON.parse(window.atob(token.split(".")[1]))
+  const customerName = Name.customer.name
+
 const navigate = useNavigate();
 
 const handleLogout = () => {
@@ -12,7 +15,7 @@ const handleLogout = () => {
 }
   return (
     <>
-      {user ? (<p>Hello {user}</p>): null}
+      {setUser ? (<p>Hello {customerName}</p>): null}
       <nav>
         <ul>
           <li>
