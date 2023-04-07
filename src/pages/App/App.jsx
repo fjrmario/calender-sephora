@@ -1,6 +1,4 @@
-import NewOrderPage from "./NewOrderPage/NewOrderPage";
 import AuthPage from "./AuthPage/AuthPage";
-import OrderHistoryPage from "./OrderHistoryPage/OrderHistoryPage";
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import NavBar from "../../components/NavBar";
@@ -33,8 +31,6 @@ const App = () => {
         <AuthPage setUser={setUser}/>
         <Routes>
           <Route path="/maps" element={<Map/>} />
-        <Route path="/orders/new" element={<NewOrderPage />} />
-        <Route path="/orders" element={<OrderHistoryPage/>} />
         <Route path="/admin/*" element={<Admin/>}/>
         <Route path="/makeupartist/:id/*" element={<MakeupArtist/>}/>
 
@@ -48,8 +44,6 @@ const App = () => {
         <NavBar user={user} setUser={setUser} />
         <Routes>
         <Route path="/maps" element={<Map/>} />
-        <Route path="/orders/new" element={<NewOrderPage />} />
-        <Route path="/orders" element={<OrderHistoryPage/>} />
         <Route path="/booking" element={<AppointmentPage/>} />
         <Route path="/history" element={<UpcomingAppointment/>} />
         <Route path="/signup" element={<SignUpForm/>} />

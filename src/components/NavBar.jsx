@@ -16,14 +16,6 @@ const handleLogout = () => {
       <nav>
         <ul>
           <li>
-            <NavLink to="/orders">Order History</NavLink>
-          </li>
-
-          <li>
-            <NavLink to="/orders/new">New Order</NavLink>
-          </li>
-
-          <li>
             <NavLink to="/maps">Map</NavLink>
           </li>
 
