@@ -35,8 +35,11 @@ const handleLogout = () => {
             <NavLink to="/history">Upcoming Appointments</NavLink>
           </li>
 
-          {/* <li>{welcomeMessage}</li> */}
-          <button onClick={handleLogout}>Logout</button>
+          {setUser && (
+            <li>
+              <button onClick={handleLogout}>Logout</button>
+            </li>
+          )}
         </ul>
       </nav>
     </>

@@ -23,7 +23,7 @@ export default function LoginForm({ setUser }) {
       });
       const data = await response.json();
       if (!response.ok) {
-        throw new Error("Network response was not OK");
+        throw new Error(data.error || "Network error");
       }
       localStorage.setItem("token",  JSON.stringify(data.token));
       const decoded = getUser()
@@ -61,6 +61,7 @@ export default function LoginForm({ setUser }) {
                 name="password"
                 value={loginTry.password}
                 onChange={handleChange}
+                type="password"
               />
             </label>
             <button>Login</button>

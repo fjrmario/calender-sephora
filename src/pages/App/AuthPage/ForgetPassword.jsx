@@ -13,23 +13,23 @@ const ForgetPassword = () => {
     
       const disable = state.password !== state.confirm;
       const existingCustomer = async (userData) => {
-        
-          const response = await fetch(`/api/customer/forget`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(userData),
-          });
-    
-          if (!response.ok) {
-            throw new Error("Reset password unsuccessful");
-          }
-    
-          const data = await response.json();
-          return data;
-        
+        const response = await fetch(`/api/customer/forget`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        });
+      
+        const data = await response.json();
+      
+        if (!response.ok) {
+          throw new Error(data.error || "Reset password unsuccessful.");
+        }
+      
+        return data;
       };
+      
     
       const handleSubmit = async (event) => {
         event.preventDefault();
