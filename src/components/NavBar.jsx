@@ -4,10 +4,12 @@ import { logout } from "../utilities/users-service";
 export default function NavBar({ setUser }) {
   const token = localStorage.getItem("token");
   const Name = token ? JSON.parse(window.atob(token.split(".")[1])) : null;
-  console.log(Name)
+  console.log(`Name: ${JSON.stringify(Name)}`);
   const userName = Name && Name.customer ? Name.customer.name : null;
   const isAdmin = Name && Name.admin && Name.admin.role === "PAdmin" ? Name.admin.role: null 
+  const isAdminName = Name && Name.admin  !== null ? Name.admin.name: null 
   console.log(`Name: ${userName}`);
+  console.log(`isAdmin: ${isAdmin}`);
 
   const navigate = useNavigate();
 
@@ -23,7 +25,7 @@ export default function NavBar({ setUser }) {
 
   return (
     <>
-      {setUser ? <p>Hello {userName}</p> : null}
+      {setUser ? <p>Hello {userName ? userName : isAdminName}</p> : null}
       <nav>
         <ul>
           {setUser && (
@@ -52,11 +54,7 @@ export default function NavBar({ setUser }) {
               <button onClick={handleAdminLogin}>Admin Login</button>
             </li>
           )}
-          {isAdmin && (
-            <li>
-              <NavLink to="/admin">Admin roles</NavLink>
-            </li>
-          )}
+
         </ul>
       </nav>
     </>

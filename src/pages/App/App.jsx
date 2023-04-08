@@ -37,6 +37,7 @@ const App = () => {
         <Route path="/makeupartist/:id/*" element={<MakeupArtist/>}/>
         <Route path="/booking" element={<AppointmentPage/>} />
         <Route path={`/adminlogin`} element={<AdminLogin  />} />
+
         </Routes>
       </main>
     );

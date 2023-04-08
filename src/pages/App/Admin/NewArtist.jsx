@@ -119,6 +119,7 @@ export default function NewArtist() {
 
                 <label htmlFor="location">Location:</label>
                 <select name="location" value={selectedLocation} onChange={handleLocationChange}>
+                <option value="">--Please Select Location--</option>
                 {locations.map((location) => (
                     <option key={location.id} value={location._id}>
                     {location.name}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, Routes, Route } from "react-router-dom";
+import { Link, Routes, Route, useNavigate } from "react-router-dom";
 import MakeupArtist from "./MakeupArtist";
 import NewArtist from "./NewArtist";
 
@@ -9,12 +9,12 @@ export default function Admin() {
   const [locations, setLocations] = useState([]);
   const [selectedMakeUpLocation, setSelectedMakeUpLocation] = useState("");
   const [token, setToken] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const userToken = localStorage.getItem("token");
-    const user = JSON.parse(window.atob(userToken.split(".")[1])).customer.name;
-    setToken(user);
-
+    const adminToken = localStorage.getItem("token");
+    JSON.parse(window.atob(adminToken.split(".")[1])).admin.role === "PAdmin" ? setToken(adminToken) : null ;
+    
     axios.get("/api/maps").then((response) => {
         setLocations(response.data);
     });
@@ -60,14 +60,21 @@ export default function Admin() {
     } catch (error) {
       console.error("Error deleting makeup artist:", error);
     }
-};
+  };
+
+  function handleClick(){
+    console.log('hi1')
+    navigate('/newmakeupartist')
+    console.log('hi2')
+
+  }
 
   return (
     <>
       <div>
-      <Link to={"/newmakeupartist"}>
-          <button> Create New Make Up Artist</button>
-        </Link>
+      {/* `<Link to={"/newmakeupartist"}> */}
+          <button onClick={handleClick}> Create New Make Up Artist</button>
+        {/* </Link> */}
         <h2>Select a location:</h2>
         <select value={selectedMakeUpLocation} onChange={handleLocationChange}>
           <option value="">--Select a location--</option>
@@ -96,7 +103,7 @@ export default function Admin() {
       {makeupArtists.map((makeupArtist) => (
       <Route key={makeupArtist._id} path={`/makeupartist/${makeupArtist._id}`} element={<MakeupArtist id={makeupArtist._id} />} />
         ))}
-        <Route path="/newmakeupartist" element={<NewArtist />} />
+      <Route path="/newmakeupartist" element={<NewArtist />} />
     </Routes>
   </>
   );
