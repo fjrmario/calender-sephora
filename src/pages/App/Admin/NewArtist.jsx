@@ -54,6 +54,25 @@ export default function NewArtist() {
         <form onSubmit={handleSubmit}>
                 <label htmlFor="name">Name:</label>
                 <input type="text" id="name" value={name} onChange={(event) => setName(event.target.value)} />
+
+                <label htmlFor="workingSchedule.startDate">Start Date: </label>
+                <input type="date" name="workingSchedule.startDate" onChange={handleInputChange} placeholder="YYYY-MM-DD" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" min={minDate} defaultValue={moment(makeupArtists[0].workingSchedule.startDate).format('YYYY-MM-DD')} />
+
+                <label htmlFor="workingSchedule.endDate">End Date:</label>
+                <input type="date" name="workingSchedule.endDate" placeholder="YYYY-MM-DD" onChange={handleInputChange} pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" min={minDate} defaultValue={moment(makeupArtists[0].workingSchedule.startDate).format('YYYY-MM-DD')}/>
+
+                <label htmlFor="workingHours.startTime">Start Time:</label>
+                <input type="time" name="workingHours.startTime" onChange={handleInputChange} placeholder="HH:MM" pattern="^([01]\d|2[0-3]):([0-5]\d)$" defaultValue={makeupArtists[0].workingHours.startTime}/>
+
+                <label htmlFor="workingHours.endTime">End Time:</label>
+                <input type="time" name="workingHours.endTime" placeholder="HH:MM" onChange={handleInputChange}  pattern="^([01]\d|2[0-3]):([0-5]\d)$" defaultValue={makeupArtists[0].workingHours.endTime} />
+
+                <label htmlFor="breakTime.startTime">Break Start Time:</label>
+                <input type="time" name="breakTime.startTime" placeholder="HH:MM" onChange={handleInputChange}   pattern="^([01]\d|2[0-3]):([0-5]\d)$" defaultValue={makeupArtists[0].breakTime.startTime}/>
+
+                <label htmlFor="breakTime.endTime">Break End Time:</label>
+                <input type="time" name="breakTime.endTime" placeholder="HH:MM" onChange={handleInputChange}  pattern="^([01]\d|2[0-3]):([0-5]\d)$" defaultValue={makeupArtists[0].breakTime.endTime}/> 
+
                 <label htmlFor="location">Location:</label>
                 <select name="location" value={selectedLocation} onChange={handleLocationChange}>
                 {locations.map((location) => (

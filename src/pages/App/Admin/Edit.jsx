@@ -12,7 +12,7 @@ export default function Edit() {
     
     useEffect(() => {
         console.log(makeupArtists);
-    }, [makeupArtists]);
+      }, [makeupArtists]);
 
     useEffect(()=>{
         async function fetchMakeupArtists(){
