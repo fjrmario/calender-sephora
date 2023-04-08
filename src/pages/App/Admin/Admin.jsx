@@ -26,7 +26,8 @@ export default function Admin() {
         if(selectedMakeUpLocation !== ""){
         const response = await axios.get(`/api/makeupartist/${selectedMakeUpLocation}`, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${token}`,
           },
         });
         setMakeupArtists(response.data);
@@ -46,7 +47,8 @@ export default function Admin() {
     try {
       const response = await axios.delete(`/api/makeupartist/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          "Authorization": `Bearer ${token}`,
         },
       });
       if (response.status === 200) {
