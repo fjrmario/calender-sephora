@@ -12,7 +12,7 @@ export default function NewArtist() {
     const [locations, setLocations] = useState([])
     const [selectedLocation, setSelectedLocation] = useState('');
     const [minDate, setMinDate] = useState('');
-
+    const [successMessage, setSuccessMessage] = useState(null);
 
     useEffect(()=>{
         async function fetchLocations(){
@@ -56,6 +56,7 @@ export default function NewArtist() {
             }
             const newMakeupArtist = await response.json();
             console.log('New makeup artist created:', newMakeupArtist);
+            setSuccessMessage("Makeup artist successfully created!");
         } catch (error) {
             console.error('Error creating makeup artist:', error);
         }
@@ -90,6 +91,9 @@ export default function NewArtist() {
     <div>
         <h1>Create a new makeup artist!</h1>
         <form onSubmit={handleSubmit}>
+        {successMessage && (
+              <p className="success-message">{successMessage}</p>
+            )}
                 <label htmlFor="name">Name:</label>
                 <input type="text" id="name" value={name} onChange={(event) => setName(event.target.value)} />
 
