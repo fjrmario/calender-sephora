@@ -55,7 +55,7 @@ const updateMakeupArtist = async (req, res) => {
         makeupArtistBody,
         { new: true } 
       );
-      res.status(200).json(makeupArtistBody);
+      res.status(200).json(makeupArtist);
     }  catch (error) {
         res.status(400).json({ error: error.message });
     }
