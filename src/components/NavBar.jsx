@@ -1,44 +1,45 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { logout } from "../utilities/users-service"
+import { logout } from "../utilities/users-service";
 
 export default function NavBar({ setUser }) {
-  const token = localStorage.getItem("token")
-  const Name =  token ? JSON.parse(window.atob(token.split(".")[1])) : null;
-  const customerName = Name ? Name.customer.name : null;
-  const isAdmin = token && token.user.role === "PAdmin";
-  console.log(`Name: ${Name}`);
+  const token = localStorage.getItem("token");
+  const Name = token ? JSON.parse(window.atob(token.split(".")[1])) : null;
+  console.log(Name)
+  const userName = Name && Name.customer ? Name.customer.name : null;
+  const isAdmin = Name && Name.admin && Name.admin.role === "PAdmin" ? Name.admin.role: null 
+  console.log(`Name: ${userName}`);
 
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
-const handleLogout = () => {
+  const handleLogout = () => {
     setUser(null);
     logout();
     navigate("/login");
-}
+  };
 
-const handleAdminLogin = () => {
-  navigate("/adminlogin");
-}
+  const handleAdminLogin = () => {
+    navigate("/adminlogin");
+  };
 
   return (
     <>
-      {setUser ? (<p>Hello {customerName}</p>): null}
+      {setUser ? <p>Hello {userName}</p> : null}
       <nav>
         <ul>
-        {setUser && (
-          <li>
-            <NavLink to="/maps">Map</NavLink>
-          </li>
-        )}
           {setUser && (
-          <li>
-            <NavLink to="/booking">Appointment Booking</NavLink>
-          </li>
+            <li>
+              <NavLink to="/maps">Map</NavLink>
+            </li>
           )}
           {setUser && (
-          <li>
-            <NavLink to="/history">Upcoming Appointments</NavLink>
-          </li>
+            <li>
+              <NavLink to="/booking">Appointment Booking</NavLink>
+            </li>
+          )}
+          {setUser && (
+            <li>
+              <NavLink to="/history">Upcoming Appointments</NavLink>
+            </li>
           )}
 
           {setUser && (
@@ -46,13 +47,15 @@ const handleAdminLogin = () => {
               <button onClick={handleLogout}>Logout</button>
             </li>
           )}
-           <li>
-           <button onClick={handleAdminLogin}>Admin Login</button>
-          </li>
+          {!setUser && (
+            <li>
+              <button onClick={handleAdminLogin}>Admin Login</button>
+            </li>
+          )}
           {isAdmin && (
-          <li>
-            <NavLink to="/admin">Admin roles</NavLink>
-          </li>
+            <li>
+              <NavLink to="/admin">Admin roles</NavLink>
+            </li>
           )}
         </ul>
       </nav>
