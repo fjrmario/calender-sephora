@@ -21,7 +21,8 @@ export default function Edit() {
       try {
         const response = await fetch(`/api/makeupartist/edit/${id}`, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
           },
         });
         if (!response.ok) {
@@ -41,7 +42,8 @@ export default function Edit() {
       try {
         const response = await fetch(`/api/maps`, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
           },
         });
         if (!response.ok) {
@@ -75,7 +77,9 @@ export default function Edit() {
           ...prevState,
           [name]: value,
         }));
-    }}};
+      }
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -84,7 +88,7 @@ export default function Edit() {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify(makeupArtists),
       });
