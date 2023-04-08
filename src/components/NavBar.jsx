@@ -13,6 +13,11 @@ const handleLogout = () => {
     logout();
     navigate("/login");
 }
+
+const handleAdminLogin = () => {
+  navigate("/adminlogin");
+}
+
   return (
     <>
       {setUser ? (<p>Hello {customerName}</p>): null}
@@ -35,6 +40,9 @@ const handleLogout = () => {
               <button onClick={handleLogout}>Logout</button>
             </li>
           )}
+           <li>
+           <button onClick={handleAdminLogin}>Admin Login</button>
+          </li>
         </ul>
       </nav>
     </>

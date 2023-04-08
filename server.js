@@ -9,6 +9,7 @@ const calendarRouter = require('./routes/calendarRouter');
 const appointmentRouter = require('./routes/appointmentRouter');
 const makeupArtistRouter = require('./routes/makeupArtistRouter')
 const locationRouter = require('./routes/locationRouter')
+const adminRouter = require('./routes/adminRouter');
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use("/api/calender", calendarRouter);
 app.use("/api/booking", appointmentRouter);
 app.use("/api/maps", locationRouter)
 app.use("/api/makeupartist", makeupArtistRouter)
+app.use("/api/admin", adminRouter);
 
 app.get("/*", function (req, res) {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
