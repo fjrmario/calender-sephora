@@ -13,7 +13,8 @@ export default function NewArtist() {
     const [selectedLocation, setSelectedLocation] = useState('');
     const [minDate, setMinDate] = useState('');
     const [successMessage, setSuccessMessage] = useState(null);
-
+    const token = localStorage.getItem("token");
+    
     useEffect(()=>{
         async function fetchLocations(){
             try{
@@ -48,6 +49,7 @@ export default function NewArtist() {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
+                  "Authorization": `Bearer ${token}`,
                 },
                 body: JSON.stringify(data),
             });
