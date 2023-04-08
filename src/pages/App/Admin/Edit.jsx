@@ -101,7 +101,7 @@ export default function Edit() {
             breakEndTime <= workingEndTime &&
             breakStartTime < breakEndTime
           );
-        };
+    };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -164,7 +164,7 @@ export default function Edit() {
                     ))}
                     </select>
 
-                    <button type="submit" disabled={!isBreakTimeValid()} >Submit</button>
+                    <button type="submit" >Submit</button>
             </form>
         </div>
     }

@@ -47,8 +47,6 @@ const findMakeupArtistByLocation = async (req, res) => {
 
 const updateMakeupArtist = async (req, res) => {
     const { makeupArtistId } = req.params;
-    console.log(req.params, 'params')
-    console.log(makeupArtistId, 'in controller')
   
     try {
       const makeupArtistBody = req.body;
