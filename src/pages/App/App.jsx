@@ -35,6 +35,7 @@ const App = () => {
         <Route path="/admin/*" element={<Admin/>}/>
         <Route path="/makeupartist/:id/*" element={<MakeupArtist/>}/>
         <Route path="/booking" element={<AppointmentPage/>} />
+        <Route path={`/adminlogin`} element={<AdminLogin  />} />
         </Routes>
       </main>
     );
@@ -51,7 +52,8 @@ const App = () => {
         <Route path="/makeupartist/:id/*" element={<MakeupArtist/>}/>
         <Route path={`/makeupartist/edit/:id`} element={<Edit  />} />
         <Route path="/newmakeupartist" element={<NewArtist />} />
-
+        <Route path={`/adminlogin`} element={<AdminLogin  />} />
+        
 
         </Routes>
         

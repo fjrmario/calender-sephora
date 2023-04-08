@@ -93,14 +93,14 @@ export default function Edit() {
         console.log(breakStartTime)
         console.log(breakEndTime)
 
-        return !(
-            breakStartTime < workingStartTime ||
-            breakStartTime > workingEndTime ||
-            breakEndTime < workingStartTime ||
-            breakEndTime > workingEndTime ||
-            breakStartTime > breakEndTime
+        return (
+            breakStartTime >= workingStartTime &&
+            breakStartTime < workingEndTime &&
+            breakEndTime > workingStartTime &&
+            breakEndTime <= workingEndTime &&
+            breakStartTime < breakEndTime
           );
-    };
+        };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -162,7 +162,7 @@ export default function Edit() {
                     ))}
                     </select>
 
-                    <button type="submit" disabled={isBreakTimeValid()} >Submit</button>
+                    <button type="submit" disabled={!isBreakTimeValid()} >Submit</button>
             </form>
         </div>
     }
