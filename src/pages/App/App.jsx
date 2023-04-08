@@ -11,6 +11,7 @@ import Admin from "./Admin/Admin"
 import MakeupArtist from "./Admin/MakeupArtist"
 import Edit from "./Admin/Edit";
 import NewArtist from "./Admin/NewArtist";
+import AdminLogin from "./Admin/AdminLogin";
 
 
 const App = () => {

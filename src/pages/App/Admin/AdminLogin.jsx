@@ -4,7 +4,7 @@ const token = localStorage.getItem("token");
 import { useNavigate } from "react-router-dom";
 
 const AdminLogin = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [adminLogin, setadminLogin] = useState({
     email: "",
@@ -32,7 +32,7 @@ const AdminLogin = () => {
       const Name = JSON.parse(window.atob(data.token.split(".")[1]));
       console.log("Name: ", JSON.stringify(Name));
 
-      // navigate("/helloworld");
+      navigate("/admin");
       console.log(decoded);
     } catch (error) {
       setError(error.message);
