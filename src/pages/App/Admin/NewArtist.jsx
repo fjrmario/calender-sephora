@@ -1,9 +1,18 @@
 import { useEffect, useState } from "react";
+import moment from 'moment'
 
 export default function NewArtist() {
     const [name, setName] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [startTime, setStartTime] = useState('');
+    const [endTime, setEndTime] = useState('');
+    const [breakStartTime, setBreakStartTime] = useState('');
+    const [breakEndTime, setBreakEndTime] = useState('');
     const [locations, setLocations] = useState([])
     const [selectedLocation, setSelectedLocation] = useState('');
+    const [minDate, setMinDate] = useState('');
+
 
     useEffect(()=>{
         async function fetchLocations(){
@@ -20,10 +29,18 @@ export default function NewArtist() {
             fetchLocations()
     }, [])
 
+    useEffect(() => {
+        const today = moment().format("YYYY-MM-DD");
+        setMinDate(today);
+    }, []);
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = {
           name,
+          workingSchedule: { startDate, endDate},
+          workingHours: { startTime, endTime },
+          breakTime: { startTime: breakStartTime, endTime: breakEndTime},
           location: { id: selectedLocation },
         };
         try {
@@ -44,34 +61,55 @@ export default function NewArtist() {
         }
     };
 
+    const handleInputChange = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        switch (name) {
+          case 'workingHours.startTime':
+            setStartTime(value);
+            break;
+          case 'workingHours.endTime':
+            setEndTime(value);
+            break;
+          case 'breakTime.startTime':
+            setBreakStartTime(value);
+            break;
+          case 'breakTime.endTime':
+            setBreakEndTime(value);
+            break;
+          default:
+            break;
+        }
+    };
+    
     const handleLocationChange = (event) => {
         setSelectedLocation(event.target.value);
-        console.log(event.target.value)
     };
 
   return (
     <div>
+        <h1>Create a new makeup artist!</h1>
         <form onSubmit={handleSubmit}>
                 <label htmlFor="name">Name:</label>
                 <input type="text" id="name" value={name} onChange={(event) => setName(event.target.value)} />
 
                 <label htmlFor="workingSchedule.startDate">Start Date: </label>
-                <input type="date" name="workingSchedule.startDate" onChange={handleInputChange} placeholder="YYYY-MM-DD" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" min={minDate} defaultValue={moment(makeupArtists[0].workingSchedule.startDate).format('YYYY-MM-DD')} />
+                <input type="date" id="startDate" onChange={(event) => setStartDate(event.target.value)} placeholder="YYYY-MM-DD" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" min={minDate} value={moment(startDate).format('YYYY-MM-DD')} />
 
                 <label htmlFor="workingSchedule.endDate">End Date:</label>
-                <input type="date" name="workingSchedule.endDate" placeholder="YYYY-MM-DD" onChange={handleInputChange} pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" min={minDate} defaultValue={moment(makeupArtists[0].workingSchedule.startDate).format('YYYY-MM-DD')}/>
+                <input type="date" id="endDate" placeholder="YYYY-MM-DD" onChange={(event) => setEndDate(event.target.value)} pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" min={minDate} value={moment(endDate).format('YYYY-MM-DD')}/>
 
                 <label htmlFor="workingHours.startTime">Start Time:</label>
-                <input type="time" name="workingHours.startTime" onChange={handleInputChange} placeholder="HH:MM" pattern="^([01]\d|2[0-3]):([0-5]\d)$" defaultValue={makeupArtists[0].workingHours.startTime}/>
+                <input type="time" name="workingHours.startTime" onChange={handleInputChange} placeholder="HH:MM" pattern="^([01]\d|2[0-3]):([0-5]\d)$" />
 
                 <label htmlFor="workingHours.endTime">End Time:</label>
-                <input type="time" name="workingHours.endTime" placeholder="HH:MM" onChange={handleInputChange}  pattern="^([01]\d|2[0-3]):([0-5]\d)$" defaultValue={makeupArtists[0].workingHours.endTime} />
+                <input type="time" name="workingHours.endTime" placeholder="HH:MM" onChange={handleInputChange}  pattern="^([01]\d|2[0-3]):([0-5]\d)$"  />
 
                 <label htmlFor="breakTime.startTime">Break Start Time:</label>
-                <input type="time" name="breakTime.startTime" placeholder="HH:MM" onChange={handleInputChange}   pattern="^([01]\d|2[0-3]):([0-5]\d)$" defaultValue={makeupArtists[0].breakTime.startTime}/>
+                <input type="time" name="breakTime.startTime" placeholder="HH:MM" onChange={handleInputChange}   pattern="^([01]\d|2[0-3]):([0-5]\d)$" />
 
                 <label htmlFor="breakTime.endTime">Break End Time:</label>
-                <input type="time" name="breakTime.endTime" placeholder="HH:MM" onChange={handleInputChange}  pattern="^([01]\d|2[0-3]):([0-5]\d)$" defaultValue={makeupArtists[0].breakTime.endTime}/> 
+                <input type="time" name="breakTime.endTime" placeholder="HH:MM" onChange={handleInputChange}  pattern="^([01]\d|2[0-3]):([0-5]\d)$" /> 
 
                 <label htmlFor="location">Location:</label>
                 <select name="location" value={selectedLocation} onChange={handleLocationChange}>
