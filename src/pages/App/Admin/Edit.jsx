@@ -8,6 +8,7 @@ export default function Edit() {
     const [validationError, setValidationError] = useState(null);
     const [minDate, setMinDate] = useState('');
     const [locations, setLocations] = useState([])
+    console.log(id)
     
     useEffect(() => {
         console.log(makeupArtists);
@@ -136,10 +137,10 @@ export default function Edit() {
                     <input type="text" name="name" onChange={handleInputChange} defaultValue={makeupArtists[0].name}/>
 
                     <label htmlFor="workingSchedule.startDate">Start Date: </label>
-                    <input type="date" name="workingSchedule.startDate" onChange={handleInputChange} placeholder="YYYY-MM-DD" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" min={minDate} defaultValue={new Date(makeupArtists[0].workingSchedule.startDate).toISOString().slice(0, 10)} />
+                    <input type="date" name="workingSchedule.startDate" onChange={handleInputChange} placeholder="YYYY-MM-DD" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" min={minDate} defaultValue={moment(makeupArtists[0].workingSchedule.startDate).format('YYYY-MM-DD')} />
 
                     <label htmlFor="workingSchedule.endDate">End Date:</label>
-                    <input type="date" name="workingSchedule.endDate" placeholder="YYYY-MM-DD" onChange={handleInputChange} pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" min={minDate} defaultValue={new Date(makeupArtists[0].workingSchedule.startDate).toISOString().slice(0, 10)}/>
+                    <input type="date" name="workingSchedule.endDate" placeholder="YYYY-MM-DD" onChange={handleInputChange} pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" min={minDate} defaultValue={moment(makeupArtists[0].workingSchedule.startDate).format('YYYY-MM-DD')}/>
 
                     <label htmlFor="workingHours.startTime">Start Time:</label>
                     <input type="time" name="workingHours.startTime" onChange={handleInputChange} placeholder="HH:MM" pattern="^([01]\d|2[0-3]):([0-5]\d)$" defaultValue={makeupArtists[0].workingHours.startTime}/>
@@ -155,6 +156,7 @@ export default function Edit() {
 
                     <label htmlFor="location">Location Name:</label>
                     <select name="location" onChange={handleInputChange} defaultValue={makeupArtists[0].location._id}>
+                    <option value="">--Select Location--</option>
                     {locations.map(location => (
                         <option key={location._id} value={location._id}>
                             {location.name}

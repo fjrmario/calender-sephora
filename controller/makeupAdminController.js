@@ -46,12 +46,14 @@ const findMakeupArtistByLocation = async (req, res) => {
 };
 
 const updateMakeupArtist = async (req, res) => {
-    const { id } = req.params;
+    const { makeupArtistId } = req.params;
+    console.log(req.params, 'params')
+    console.log(makeupArtistId, 'in controller')
   
     try {
       const makeupArtistBody = req.body;
       const makeupArtist = await MakeupArtist.findOneAndUpdate(
-        { id: id },
+        { _id: makeupArtistId },
         makeupArtistBody,
         { new: true } 
       );
