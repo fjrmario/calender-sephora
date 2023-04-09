@@ -75,7 +75,7 @@ app.use("/api/booking", appointmentRouter);
 ## Customer Logging in</a>
  <p align="center">
   <a href="" rel="noopener">
- <img width=800px height=800px src="/images/login.png" alt="Login"></a>
+ <img width=600px height=600px src="/images/login.png" alt="Login"></a>
 </p>
 <br>
  <p align="center">
