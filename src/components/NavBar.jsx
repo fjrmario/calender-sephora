@@ -7,7 +7,7 @@ export default function NavBar({ setUser }) {
   console.log(`Name: ${JSON.stringify(Name)}`);
   const userName = Name && Name.customer ? Name.customer.name : null;
   const isAdmin = Name && Name.admin && Name.admin.role === "PAdmin" ? Name.admin.role: null 
-  const isAdminName = Name && Name.admin  !== null ? Name.admin.name: null 
+  const isAdminName = Name && Name.admin ? Name.admin.name: null 
   console.log(`Name: ${userName}`);
   console.log(`isAdmin: ${isAdmin}`);
 
