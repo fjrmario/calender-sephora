@@ -78,53 +78,42 @@ app.use("/api/booking", appointmentRouter);
  <img style="max-width: 100%;" src="/images/login.png" alt="Login"></a>
 </p>
 <br>
+
+## Create Appointment</a>
  <p align="center">
   <a href="" rel="noopener">
- <img width=800px height=600px src="/image/forget.png" alt="Forget Password"></a>
-</p>
-<br>
- <p align="center">
-  <a href="" rel="noopener">
- <img width=800px height=600px src="/image/signup.png" alt="Create User"></a>
-</p>
-<br>
- <p align="center">
-  <a href="" rel="noopener">
- <img width=800px height=600px src="/image/emailtesting.png" alt="Create User"></a>
+ <img style="max-width: 100%;" src="/images/create_appointment.png" alt="Create Appointment"></a>
 </p>
 <br>
 
-<strong><u>Patient:</u></strong>
-<li>Enable to create, update, delete and view patient profile.</li>
-<li>Identifying routes for each action is done; ie form clicked.</li>
-<li>Using embedding method to create, update, delete and view patient's log.</li>
-
-<br>
+ ## Successful Appointment</a>
  <p align="center">
   <a href="" rel="noopener">
- <img width=800px height=600px src="/image/retrieve.png" alt="Login"></a>
+ <img style="max-width: 100%;" src="/images/successful appointment booked.png" alt="Successful Appointment Booked"></a>
 </p>
 <br>
+ 
+  ## Conditional Appointment Booking</a>
  <p align="center">
   <a href="" rel="noopener">
- <img width=800px height=600px src="/image/amend.png" alt="Forget Password"></a>
-</p>
-<br>
- <p align="center">
-  <a href="" rel="noopener">
- <img width=800px height=600px src="/image/signup.png" alt="Create User"></a>
+ <img style="max-width: 100%;" src="/images/conditional booking.png" alt="Conditional Appointment Booking"></a>
 </p>
 <br>
 
-<strong><u>Queue Number:</u></strong>
-<li>Enable to create, update, delete and view queue number.</li>
-<li>Identifying routes for each action is done; ie form clicked.</li>
-<br>
+  ## View available timeslot for Appointment Booking</a>
  <p align="center">
   <a href="" rel="noopener">
- <img width=800px height=600px src="/image/showqueue.png" alt="Create User"></a>
+ <img style="max-width: 100%;" src="/images/viewing available timeslot for appointment booking.png" alt="View Available Timeslot for Appointment Booking"></a>
 </p>
 <br>
+
+  ## View Appointment/s Booked</a>
+ <p align="center">
+  <a href="" rel="noopener">
+ <img style="max-width: 100%;" src="/images/view appointments.png" alt="View Appointment Booking"></a>
+</p>
+<br>
+
 
 ## Deliverables Timeline
 <strong><u>Day 1:</u></strong>
