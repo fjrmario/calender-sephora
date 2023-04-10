@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import Location from '../../../components/location';
 import CurrentLocation from '../../../components/currentLocation';
 import Distance from '../../../components/Distance';
+import "./Map.css";
 
 const blackIcon = new L.Icon({
   iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png',
@@ -106,11 +107,6 @@ const Map = () => {
 
   return (
     <div>
-      <Helmet>
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-              integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossOrigin="" />
-      </Helmet>
-
       <MapContainer ref={mapRef} center={initialPosition} zoom={initialZoom} style={{ height: '600px' , width: '80%'}}>
         <TileLayer url='https://tile.openstreetmap.org/{z}/{x}/{y}.png' maxZoom={15} attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'/>
 
