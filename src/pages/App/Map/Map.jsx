@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { Helmet } from 'react-helmet';
 import L from 'leaflet';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
